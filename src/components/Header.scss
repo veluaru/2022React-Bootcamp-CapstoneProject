@@ -3,48 +3,58 @@
     height: 65px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    // justify-content: space-between;
+    // align-items: center;
     background-color: white;
-    border-bottom: 1px solid rgb(184, 183, 183);
+    // border-bottom: 1px solid rgb(184, 183, 183);
     &__logo {
-        max-width: 80px;
-        max-height: 80px;
+        max-width: 65px;
+        max-height: 65px;
         margin-left: 5%;
     }
-    &__search-bar {
-        border: 2px solid rgb(211, 211, 211);
-        border-radius: 10px;
-        height: 30px;
-        margin-right: 5%;
-        display: flex;
-        align-items: center;
-        background-color: white;
-        padding-left: 8px;
-    }
+    // &__search-bar {
+    //     border-bottom: 2px solid orange;
+    //     height: 30px;
+    //     // margin-right: 5%;
+    //     display: flex;
+    //     align-items: center;
+    //     background-color: white;
+    //     flex-wrap:wrap;
+    // }
     &__input {
         border: none;
+        border-bottom: 2px solid orange;
         background-color: transparent;
-        padding-left: 8px;
         outline: none;
+        margin: 0 5px;
     }
     &__right-side {
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: right;
         align-items: center;
         margin-right: 30px;
+        width: 70%;
+        flex-shrink: 0;
     }
     &__left-side {
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: left;
         align-items: center;
-        color: white;
+        color: orange;
+        width: 30%;
+        font-family: 'Arista-Bold';
+        font-size: clamp(1rem, 2vw, 1.563rem);
     }
     &__cart-icon {
         color: orange; 
-        font-size: 50px;
-        cursor: pointer;
+        font-size: 50px !important;
+        flex-shrink: 0 !important;
+    }
+    &__search-icon {
+        color: orange; 
+        font-size: 20px;
+        flex-shrink: 0 !important;
     }
 }

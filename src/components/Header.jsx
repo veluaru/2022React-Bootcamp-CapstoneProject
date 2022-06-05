@@ -17,19 +17,19 @@ function Header() {
     <div className="header">
       <div className='header__left-side'>
         <img src={logo} className="header__logo" alt="logo" />
-        <span>La Muebleria</span>
+        <span>LA MUEBLERIA</span>
       </div>
       <div className='header__right-side'>
-        <div className='header__search-bar'>
-          <BiSearch style={{ color: 'rgb(185, 185, 185)', fontSize: '20px' }} />
+          <BiSearch className='header__search-icon' />
           <input
+            disabled
             className='header__input'
             placeholder="Search here..."
             value={searchText}
+            type='text'
             onChange={onSearchValueChange} />
-        </div>
 
-        <BiCart className='header__cart-icon'onClick={onClickCart}/>
+        <BiCart className='header__cart-icon' onClick={onClickCart}/>
       </div>
     </div>
   );
