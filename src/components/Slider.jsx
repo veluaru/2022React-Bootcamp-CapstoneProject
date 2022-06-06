@@ -12,7 +12,8 @@ function Slider({ banners }) {
       <Carousel
         infiniteLoop={true}
         showThumbs={false}
-        showStatus={false}>
+        showStatus={false}
+        autoPlay={true}>
         {banners.results.map((banner) =>
           <img key={banner.id.toString()}
             src={banner.data.main_image.url}

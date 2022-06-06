@@ -31,6 +31,12 @@ margin-bottom: 10px;
 const Category = styled.span`
 text-transform: capitalize;
 margin-bottom: 8px;
+border: 1px solid rgb(90, 222, 231);
+background-color: rgba(144, 238, 245, 0.521);
+border-radius: 5px;
+width: min-content;
+padding: 2px 7px;
+font-size: 14px;
 `;
 const Price = styled.span`
 color: orange;

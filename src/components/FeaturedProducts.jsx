@@ -26,17 +26,16 @@ text-align: center;
 `;
 
 function FeaturedProducts({ products }) {
-    console.log(products);
-    return (
-        <Wrapper>
-            <Title>Our Featured Products</Title>
-            <CardList>
-                {products.results.map((product) =>
-                    <ProductCard key={product.id.toString()} product={product}/>
-                )}
-            </CardList>
-        </Wrapper>
-    );
+  return (
+    <Wrapper>
+      <Title>Our Featured Products</Title>
+      <CardList>
+        {products.results.map((product) =>
+          <ProductCard key={product.id.toString()} product={product} />
+        )}
+      </CardList>
+    </Wrapper>
+  );
 }
 
 export default FeaturedProducts;

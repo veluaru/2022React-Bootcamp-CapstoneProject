@@ -1,8 +1,11 @@
 import styled from 'styled-components';
-import { useFeaturedBanners } from '../utils/hooks/useFeaturedBanners';
-import { useFeaturedCategories } from '../utils/hooks/useFeaturedCategories';
-import { useFeaturedProducts } from '../utils/hooks/useFeaturedProducts';
-import Spinner from '../components/Spinner.jsx';
+// import { useFeaturedBanners } from '../utils/hooks/useFeaturedBanners';
+// import { useFeaturedCategories } from '../utils/hooks/useFeaturedCategories';
+// import { useFeaturedProducts } from '../utils/hooks/useFeaturedProducts';
+import dataBanners from '../mocks/en-us/featured-banners.json';
+import dataCategories from '../mocks/en-us/product-categories.json';
+import dataProducts from '../mocks/en-us/featured-products.json';
+// import Spinner from '../components/Spinner.jsx';
 import Slider from '../components/Slider.jsx';
 import Categories from '../components/Categories.jsx';
 import FeaturedProducts from '../components/FeaturedProducts';
@@ -16,15 +19,16 @@ padding: 0 3%;
 `;
 
 function Home() {
-  const { data, isLoading } = useFeaturedBanners('banner');
-  const { dataCategories, isLoadingCategories } = useFeaturedCategories();
-  const { dataProducts, isLoadingProducts } = useFeaturedProducts();
+  // const { data, isLoading } = useFeaturedBanners('banner');
+  // const { dataCategories, isLoadingCategories } = useFeaturedCategories();
+  // const { dataProducts, isLoadingProducts } = useFeaturedProducts();
+console.log(dataProducts);
 
   return (
     <Wrapper>
-      {isLoading ? <Spinner /> : <Slider banners={data} />}
-      {isLoadingCategories ? <Spinner /> : <Categories categories={dataCategories} />}
-      {isLoadingProducts ? <Spinner /> : <FeaturedProducts products={dataProducts} />}
+      <Slider banners={dataBanners} />
+      <Categories categories={dataCategories} />
+      <FeaturedProducts products={dataProducts} />
     </Wrapper>
   );
 }
