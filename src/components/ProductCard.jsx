@@ -1,6 +1,8 @@
 import styled from 'styled-components'
+import { BsCartPlus } from 'react-icons/bs'
 
 const Card = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   box-shadow: 0px 0px 10px -3px rgba(110,110,110,0.53);
@@ -40,7 +42,6 @@ const Category = styled.span`
 `
 const Price = styled.span`
   color: orange;
-  font-weight: bold;
 `
 const Wrapper = styled.div`
   max-height: 30%;
@@ -49,6 +50,12 @@ const Wrapper = styled.div`
   margin-top: 10px;
   font-size: 16px;
   padding: 10px;
+`
+const Icon = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0 11px 11px 0;
 `
 
 function ProductCard({ product }) {
@@ -63,6 +70,9 @@ function ProductCard({ product }) {
         <Category>{product.data.category.slug}</Category>
         <Price>Price: ${product.data.price}</Price>
       </Wrapper>
+      <Icon>
+        <BsCartPlus style={{fontSize: '22px', color: 'orange'}} />
+      </Icon>
     </Card>
   )
 }
