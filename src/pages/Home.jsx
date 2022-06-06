@@ -22,8 +22,6 @@ function Home() {
   // const { data, isLoading } = useFeaturedBanners('banner');
   // const { dataCategories, isLoadingCategories } = useFeaturedCategories();
   // const { dataProducts, isLoadingProducts } = useFeaturedProducts();
-  console.log(dataProducts)
-
   return (
     <Wrapper>
       <Slider banners={dataBanners} />

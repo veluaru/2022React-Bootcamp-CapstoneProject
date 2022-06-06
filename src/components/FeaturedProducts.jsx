@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   margin-top: 15px;
   background-color: rgba(255, 233, 219, 0.637);
   border-radius: 10px;
-  padding-bottom: 10px;
+  padding: 10px;
 `
 const CardList = styled.div`
   display: flex;
