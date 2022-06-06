@@ -1,24 +1,28 @@
-import { useState, useEffect } from 'react';
-import { API_BASE_URL } from '../constants';
-import { useLatestAPI } from './useLatestAPI';
+import { useState, useEffect } from 'react'
+import { API_BASE_URL } from '../constants'
+import { useLatestAPI } from './useLatestAPI'
 
 export function useFeaturedCategories() {
-  const { ref: apiRef, isLoadingCategories: isApiMetadataLoading } = useLatestAPI();
+  const { ref: apiRef, isLoadingCategories: isApiMetadataLoading } =
+    useLatestAPI()
   const [featuredCategories, setFeaturedCategories] = useState(() => ({
     dataCategories: {},
     isLoadingCategories: true,
-  }));
+  }))
 
   useEffect(() => {
     if (!apiRef || isApiMetadataLoading) {
-      return () => {};
+      return () => {}
     }
 
-    const controller = new AbortController();
+    const controller = new AbortController()
 
     async function getFeaturedCategories() {
       try {
-        setFeaturedCategories({ dataCategories: {}, isLoadingCategories: true });
+        setFeaturedCategories({
+          dataCategories: {},
+          isLoadingCategories: true,
+        })
 
         const response = await fetch(
           `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
@@ -27,22 +31,28 @@ export function useFeaturedCategories() {
           {
             signal: controller.signal,
           }
-        );
-        const dataCategories = await response.json();
+        )
+        const dataCategories = await response.json()
 
-        setFeaturedCategories({ dataCategories, isLoadingCategories: false });
+        setFeaturedCategories({
+          dataCategories,
+          isLoadingCategories: false,
+        })
       } catch (err) {
-        setFeaturedCategories({ dataCategories: {}, isLoadingCategories: false });
-        console.error(err);
+        setFeaturedCategories({
+          dataCategories: {},
+          isLoadingCategories: false,
+        })
+        console.error(err)
       }
     }
 
-    getFeaturedCategories();
+    getFeaturedCategories()
 
     return () => {
-      controller.abort();
-    };
-  }, [apiRef, isApiMetadataLoading]);
+      controller.abort()
+    }
+  }, [apiRef, isApiMetadataLoading])
 
-  return featuredCategories;
+  return featuredCategories
 }

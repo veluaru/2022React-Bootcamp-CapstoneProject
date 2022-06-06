@@ -1,24 +1,28 @@
-import { useState, useEffect } from 'react';
-import { API_BASE_URL } from '../constants';
-import { useLatestAPI } from './useLatestAPI';
+import { useState, useEffect } from 'react'
+import { API_BASE_URL } from '../constants'
+import { useLatestAPI } from './useLatestAPI'
 
 export function useFeaturedProducts() {
-  const { ref: apiRef, isLoadingProducts: isApiMetadataLoading } = useLatestAPI();
+  const { ref: apiRef, isLoadingProducts: isApiMetadataLoading } =
+    useLatestAPI()
   const [featuredProducts, setFeaturedProducts] = useState(() => ({
     dataProducts: {},
     isLoadingProducts: true,
-  }));
+  }))
 
   useEffect(() => {
     if (!apiRef || isApiMetadataLoading) {
-      return () => {};
+      return () => {}
     }
 
-    const controller = new AbortController();
+    const controller = new AbortController()
 
     async function getFeaturedProducts() {
       try {
-        setFeaturedProducts({ dataProducts: {}, isLoadingProducts: true });
+        setFeaturedProducts({
+          dataProducts: {},
+          isLoadingProducts: true,
+        })
 
         const response = await fetch(
           `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
@@ -27,22 +31,25 @@ export function useFeaturedProducts() {
           {
             signal: controller.signal,
           }
-        );
-        const dataProducts = await response.json();
+        )
+        const dataProducts = await response.json()
 
-        setFeaturedProducts({ dataProducts, isLoadingProducts: false });
+        setFeaturedProducts({ dataProducts, isLoadingProducts: false })
       } catch (err) {
-        setFeaturedProducts({ dataProducts: {}, isLoadingProducts: false });
-        console.error(err);
+        setFeaturedProducts({
+          dataProducts: {},
+          isLoadingProducts: false,
+        })
+        console.error(err)
       }
     }
 
-    getFeaturedProducts();
+    getFeaturedProducts()
 
     return () => {
-      controller.abort();
-    };
-  }, [apiRef, isApiMetadataLoading]);
+      controller.abort()
+    }
+  }, [apiRef, isApiMetadataLoading])
 
-  return featuredProducts;
+  return featuredProducts
 }
