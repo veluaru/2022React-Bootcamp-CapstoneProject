@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { BiSearch } from 'react-icons/bi'
 
-
 const SearchInput = styled.input`
   border: none;
   border-bottom: 2px solid orange;
@@ -25,11 +24,13 @@ function SearchBar() {
   }
   return (
     <Wrapper>
-      <BiSearch style={{
-        color: 'orange',
-        fontSize: '20px',
-        flexShrink: '0',
-      }} />
+      <BiSearch
+        style={{
+          color: 'orange',
+          fontSize: '20px',
+          flexShrink: '0',
+        }}
+      />
       <SearchInput
         disabled
         placeholder="Search here..."
@@ -38,7 +39,6 @@ function SearchBar() {
         onChange={onSearchValueChange}
       />
     </Wrapper>
-
   )
 }
 
