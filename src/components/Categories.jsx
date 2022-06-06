@@ -15,7 +15,7 @@ box-shadow: 0px 0px 10px -2px rgba(110,110,110,0.53);
 border-radius: 10px;
 height: 40px;
 margin: 1%;
-padding: 5px 10px;
+padding: 5px 20px;
 cursor: pointer;
 :hover {
   box-shadow: 0px 0px 10px 1px rgba(110,110,110,0.53);
@@ -36,7 +36,7 @@ color: Orange;
 function Categories({ categories }) {
   return (
     <Wrapper>
-      <Title>Our Categories</Title>
+      <Title>Categories</Title>
       <CardList>
         {categories.results.map((category) =>
           <Card key={category.id.toString()}>{category.data.name}</Card>
