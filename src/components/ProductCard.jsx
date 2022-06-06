@@ -1,19 +1,19 @@
 import styled from 'styled-components'
 
 const Card = styled.div`
-display: flex;
-flex-direction: column;
-box-shadow: 0px 0px 10px -3px rgba(110,110,110,0.53);
-border-radius: 10px;
-height: 100%
-max-height: 300px;
-width: 200px;
-margin: 2% 1%;
-cursor: pointer;
-background-color: white;
-:hover {
-    box-shadow: 0px 0px 10px 1px rgba(110,110,110,0.53);
-}
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 10px -3px rgba(110,110,110,0.53);
+  border-radius: 10px;
+  height: 100%
+  max-height: 300px;
+  width: 200px;
+  margin: 2% 1%;
+  cursor: pointer;
+  background-color: white;
+  :hover {
+      box-shadow: 0px 0px 10px 1px rgba(110,110,110,0.53);
+  }
 `
 const Image = styled.img`
   width: 100%;
