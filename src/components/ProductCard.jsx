@@ -26,6 +26,7 @@ const Name = styled.span`
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 10px;
+  height: 45px;
 `
 const Category = styled.span`
   text-transform: capitalize;
