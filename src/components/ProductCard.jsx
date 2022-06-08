@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { BsCartPlus } from 'react-icons/bs'
+import cartPlusIcon from '../images/cart-plus.png'
 
 const Card = styled.div`
   position: relative;
@@ -56,6 +56,10 @@ const Icon = styled.div`
   bottom: 0;
   right: 0;
   margin: 0 11px 11px 0;
+  img {
+    width: 25px;
+    height: 25px;
+  }
 `
 
 function ProductCard({ product }) {
@@ -71,7 +75,10 @@ function ProductCard({ product }) {
         <Price>Price: ${product.data.price}</Price>
       </Wrapper>
       <Icon>
-        <BsCartPlus style={{fontSize: '22px', color: 'orange'}} />
+        <img
+          src={cartPlusIcon}
+          alt='Cart Plus Icon'
+        />
       </Icon>
     </Card>
   )

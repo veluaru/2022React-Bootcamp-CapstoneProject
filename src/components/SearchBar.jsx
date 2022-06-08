@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { BiSearch } from 'react-icons/bi'
+import searchIcon from '../images/search.png'
+// import { BiSearch } from 'react-icons/bi'
 
 const SearchInput = styled.input`
   border: none;
@@ -16,6 +17,10 @@ const Wrapper = styled.div`
   flex-direction: row;
   align-items: center;
 `
+const Icon = styled.img`
+  width: 25px;
+  height: 25px;
+`
 
 function SearchBar() {
   const [searchText, setSearchText] = React.useState('')
@@ -24,12 +29,9 @@ function SearchBar() {
   }
   return (
     <Wrapper>
-      <BiSearch
-        style={{
-          color: 'orange',
-          fontSize: '20px',
-          flexShrink: '0',
-        }}
+      <Icon
+        src={searchIcon}
+        alt='Search Icon'
       />
       <SearchInput
         disabled

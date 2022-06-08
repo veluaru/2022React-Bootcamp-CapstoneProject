@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   padding: 1% 0;
 `
 
-function Slider({ banners }) {
+function Slider({ banners: results }) {
   return (
     <Wrapper>
       <Carousel
@@ -15,7 +15,7 @@ function Slider({ banners }) {
         showStatus={false}
         autoPlay={true}
       >
-        {banners.results.map((banner) => (
+        {results.map((banner) => (
           <img
             key={banner.id.toString()}
             src={banner.data.main_image.url}

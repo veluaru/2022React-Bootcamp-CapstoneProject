@@ -1,10 +1,18 @@
 import './Header.scss'
 import React from 'react'
+import styled from 'styled-components'
 import logo from '../images/logo1.png'
-import { BiCart } from 'react-icons/bi'
+import cartIcon from '../images/cart.png'
 import SearchBar from './SearchBar'
 
+const Icon = styled.img`
+width: 40px;
+height: 40px;
+margin-left: 20px;
+`
+
 function Header() {
+
   const onClickCart = () => {
     console.log('Cart clicked!')
   }
@@ -17,7 +25,11 @@ function Header() {
       </div>
       <div className="header__right-side">
         <SearchBar />
-        <BiCart className="header__cart-icon" onClick={onClickCart} />
+        <Icon
+          onClick={onClickCart}
+          src={cartIcon}
+          alt='Cart Icon'
+        />
       </div>
     </div>
   )

@@ -42,17 +42,16 @@ const Image = styled.img`
   margin-right: 15px;
 `
 
-function Categories({ categories }) {
-  console.log(categories);
+function Categories({ categories: results }) {
   return (
     <Wrapper>
       <Title>Categories</Title>
       <CardList>
-        {categories.results.map((category) => (
-          <Card key={category.id.toString()}>
-            <Image src={category.data.main_image.url}
-              alt={category.data.main_image.alt} />
-            {category.data.name}
+        {results.map(({id, data: {main_image, name}}) => (
+          <Card key={id.toString()}>
+            <Image src={main_image.url}
+              alt={main_image.alt} />
+            {name}
           </Card>
         ))}
       </CardList>

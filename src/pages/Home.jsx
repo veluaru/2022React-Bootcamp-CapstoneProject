@@ -24,9 +24,9 @@ function Home() {
   // const { dataProducts, isLoadingProducts } = useFeaturedProducts();
   return (
     <Wrapper>
-      <Slider banners={dataBanners} />
-      <Categories categories={dataCategories} />
-      <FeaturedProducts products={dataProducts} />
+      <Slider banners={dataBanners.results} />
+      <Categories categories={dataCategories.results} />
+      <FeaturedProducts products={dataProducts.results} />
     </Wrapper>
   )
 }

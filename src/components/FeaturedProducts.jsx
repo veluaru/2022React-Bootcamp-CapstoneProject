@@ -25,12 +25,12 @@ const Title = styled.h1`
   text-align: center;
 `
 
-function FeaturedProducts({ products }) {
+function FeaturedProducts({ products: results }) {
   return (
     <Wrapper>
       <Title>Our Featured Products</Title>
       <CardList>
-        {products.results.map((product) => (
+        {results.map((product) => (
           <ProductCard key={product.id.toString()} product={product} />
         ))}
       </CardList>
