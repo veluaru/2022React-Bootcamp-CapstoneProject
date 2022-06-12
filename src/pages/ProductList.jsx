@@ -3,7 +3,7 @@ import React from 'react'
 import dataCategories from '../mocks/en-us/product-categories.json'
 import dataProducts from '../mocks/en-us/products.json'
 import Products from '../components/Products.jsx'
-import Spinner from '../components/Spinner.jsx';
+import Spinner from '../components/Spinner.jsx'
 
 const Wrapper = styled.div`
   display: flex;
@@ -121,9 +121,9 @@ function ProductList() {
   React.useEffect(() => {
     const timer = setTimeout(() => {
       setDataLoaded(true)
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
+    }, 2000)
+    return () => clearTimeout(timer)
+  }, [])
 
   return (
     <Wrapper>
@@ -147,11 +147,7 @@ function ProductList() {
           </List>
         </CategorySidebar>
         <AllProducts>
-          {
-            dataLoaded ?
-              <Products products={filteredProducts} />
-              : <Spinner />
-          }
+          {dataLoaded ? <Products products={filteredProducts} /> : <Spinner />}
         </AllProducts>
       </WrapperProductList>
       <Pagination>
