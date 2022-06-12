@@ -76,10 +76,7 @@ function ProductCard({ product }) {
         <Price>Price: ${product.data.price}</Price>
       </Wrapper>
       <Icon>
-        <img
-          src={cartPlusIcon}
-          alt='Cart Plus Icon'
-        />
+        <img src={cartPlusIcon} alt="Cart Plus Icon" />
       </Icon>
     </Card>
   )

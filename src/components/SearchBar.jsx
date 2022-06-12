@@ -28,10 +28,7 @@ function SearchBar() {
   }
   return (
     <Wrapper>
-      <Icon
-        src={searchIcon}
-        alt='Search Icon'
-      />
+      <Icon src={searchIcon} alt="Search Icon" />
       <SearchInput
         disabled
         placeholder="Search here..."

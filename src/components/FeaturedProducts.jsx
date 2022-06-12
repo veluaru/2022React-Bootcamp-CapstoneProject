@@ -22,7 +22,7 @@ function FeaturedProducts({ products: results }) {
   return (
     <Wrapper>
       <Title>Our Featured Products</Title>
-      <Products products={ results } />
+      <Products products={results} />
     </Wrapper>
   )
 }

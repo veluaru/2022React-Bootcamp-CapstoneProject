@@ -47,10 +47,9 @@ function Categories({ categories: results }) {
     <Wrapper>
       <Title>Categories</Title>
       <CardList>
-        {results.map(({id, data: {main_image, name}}) => (
+        {results.map(({ id, data: { main_image, name } }) => (
           <Card key={id.toString()}>
-            <Image src={main_image.url}
-              alt={main_image.alt} />
+            <Image src={main_image.url} alt={main_image.alt} />
             {name}
           </Card>
         ))}

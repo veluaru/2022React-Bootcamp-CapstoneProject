@@ -9,14 +9,13 @@ const CardList = styled.div`
   width: 100%;
 `
 
-
 function Products({ products: results }) {
   return (
-      <CardList>
-        {results.map((product) => (
-          <ProductCard key={product.id.toString()} product={product} />
-        ))}
-      </CardList>
+    <CardList>
+      {results.map((product) => (
+        <ProductCard key={product.id.toString()} product={product} />
+      ))}
+    </CardList>
   )
 }
 

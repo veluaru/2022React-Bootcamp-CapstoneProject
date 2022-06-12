@@ -77,42 +77,42 @@ const activePagingStyle = {
   cursor: 'auto',
 }
 
-
 function ProductList() {
-  const [filteredProducts, setFilteredProducts] = React.useState(dataProducts.results)
+  const [filteredProducts, setFilteredProducts] = React.useState(
+    dataProducts.results
+  )
   const [filterSelected, setFilterSelected] = React.useState([])
 
   const onFilterClick = (category) => {
     if (filterSelected.includes(category)) {
-      let previousArray = filterSelected;
-      const index = previousArray.indexOf(category);
+      let previousArray = filterSelected
+      const index = previousArray.indexOf(category)
       if (index > -1) {
-        previousArray.splice(index, 1);
+        previousArray.splice(index, 1)
       }
-      let newArray = previousArray;
-      setFilterSelected(newArray);
+      let newArray = previousArray
+      setFilterSelected(newArray)
       if (filterSelected.length === 0) {
-        setFilteredProducts(dataProducts.results);
-        return;
+        setFilteredProducts(dataProducts.results)
+        return
       }
-      updateProductsArray();
+      updateProductsArray()
     } else {
-      let newCategorySelected = filterSelected;
-      newCategorySelected.push(category);
-      setFilterSelected(newCategorySelected);
-      updateProductsArray();
+      let newCategorySelected = filterSelected
+      newCategorySelected.push(category)
+      setFilterSelected(newCategorySelected)
+      updateProductsArray()
     }
   }
   const updateProductsArray = () => {
-    let defaultArray = dataProducts.results;
-    let newFilterArray =
-      defaultArray.filter((product) => {
-        let categoryString =
-          product.data.category.slug.replace(/\w\S*/g, (w) =>
-            (w.replace(/^\w/, (c) => c.toUpperCase())));
-        return filterSelected.includes(categoryString)
-      })
-    setFilteredProducts(newFilterArray);
+    let defaultArray = dataProducts.results
+    let newFilterArray = defaultArray.filter((product) => {
+      let categoryString = product.data.category.slug.replace(/\w\S*/g, (w) =>
+        w.replace(/^\w/, (c) => c.toUpperCase())
+      )
+      return filterSelected.includes(categoryString)
+    })
+    setFilteredProducts(newFilterArray)
   }
 
   return (
@@ -123,9 +123,14 @@ function ProductList() {
           <List>
             {dataCategories.results.map(({ id, data: { name } }) => (
               <Category
-                style={filterSelected.includes(name) ? selectedCategoryStyle : defaultCategoryStyle}
+                style={
+                  filterSelected.includes(name)
+                    ? selectedCategoryStyle
+                    : defaultCategoryStyle
+                }
                 key={id.toString()}
-                onClick={() => onFilterClick(name)}>
+                onClick={() => onFilterClick(name)}
+              >
                 {name}
               </Category>
             ))}
