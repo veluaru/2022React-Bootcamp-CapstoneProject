@@ -4,11 +4,18 @@ import dataCategories from '../mocks/en-us/product-categories.json'
 import dataProducts from '../mocks/en-us/products.json'
 import Products from '../components/Products.jsx'
 
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  padding: 2% 5% 0 5%;
+  margin-bottom: 30px;
+`
 const WrapperProductList = styled.div`
   display: flex;
   flex-direction: row;
-  height: 100%;
-  padding: 2% 5% 0 5%;
+  margin-bottom: 30px;
 `
 const CategorySidebar = styled.div`
   display: flex;
@@ -42,6 +49,20 @@ const AllProducts = styled.div`
   align-items: center;
   flex-wrap: wrap;
 `
+const Pagination = styled.div`
+  button {
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid rgb(227, 230, 230);
+    background-color: rgb(227, 230, 230);
+    border-radius: 5px;
+    color: black;
+    margin 5px;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+`
+
 const selectedCategoryStyle = {
   color: 'black',
   backgroundColor: 'rgb(171, 240, 245)',
@@ -50,6 +71,12 @@ const defaultCategoryStyle = {
   color: 'black',
   backgroundColor: 'white',
 }
+const activePagingStyle = {
+  border: '1px solid rgb(171, 240, 245)',
+  backgroundColor: 'rgb(171, 240, 245)',
+  cursor: 'auto',
+}
+
 
 function ProductList() {
   const [filteredProducts, setFilteredProducts] = React.useState(dataProducts.results)
@@ -80,33 +107,47 @@ function ProductList() {
     let defaultArray = dataProducts.results;
     let newFilterArray =
       defaultArray.filter((product) => {
-        let categoryString = 
-        product.data.category.slug.replace(/\w\S*/g, (w) => 
-        (w.replace(/^\w/, (c) => c.toUpperCase())));
+        let categoryString =
+          product.data.category.slug.replace(/\w\S*/g, (w) =>
+            (w.replace(/^\w/, (c) => c.toUpperCase())));
         return filterSelected.includes(categoryString)
       })
     setFilteredProducts(newFilterArray);
   }
 
   return (
-    <WrapperProductList>
-      <CategorySidebar>
-        <Title>Categories</Title>
-        <List>
-          {dataCategories.results.map(({ id, data: { name } }) => (
-            <Category
-              style={filterSelected.includes(name) ? selectedCategoryStyle : defaultCategoryStyle}
-              key={id.toString()}
-              onClick={() => onFilterClick(name)}>
-              {name}
-            </Category>
-          ))}
-        </List>
-      </CategorySidebar>
-      <AllProducts>
-        <Products products={filteredProducts} />
-      </AllProducts>
-    </WrapperProductList>
+    <Wrapper>
+      <WrapperProductList>
+        <CategorySidebar>
+          <Title>Categories</Title>
+          <List>
+            {dataCategories.results.map(({ id, data: { name } }) => (
+              <Category
+                style={filterSelected.includes(name) ? selectedCategoryStyle : defaultCategoryStyle}
+                key={id.toString()}
+                onClick={() => onFilterClick(name)}>
+                {name}
+              </Category>
+            ))}
+          </List>
+        </CategorySidebar>
+        <AllProducts>
+          <Products products={filteredProducts} />
+        </AllProducts>
+      </WrapperProductList>
+      <Pagination>
+        <div>
+          <button>&laquo;</button>
+          <button style={activePagingStyle}>1</button>
+          <button>2</button>
+          <button>3</button>
+          <button>4</button>
+          <button>5</button>
+          <button>6</button>
+          <button>&raquo;</button>
+        </div>
+      </Pagination>
+    </Wrapper>
   )
 }
 
