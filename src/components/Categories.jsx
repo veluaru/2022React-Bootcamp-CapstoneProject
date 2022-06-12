@@ -6,6 +6,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   margin: 20px 0;
+  width: 100%;
 `
 const Card = styled.div`
   display: flex;

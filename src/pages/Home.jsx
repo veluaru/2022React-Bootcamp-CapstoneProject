@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import dataBanners from '../mocks/en-us/featured-banners.json'
 import dataCategories from '../mocks/en-us/product-categories.json'
 import dataProducts from '../mocks/en-us/featured-products.json'
-// import Spinner from '../components/Spinner.jsx';
 import Slider from '../components/Slider.jsx'
 import Categories from '../components/Categories.jsx'
 import FeaturedProducts from '../components/FeaturedProducts'

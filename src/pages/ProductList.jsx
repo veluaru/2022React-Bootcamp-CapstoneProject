@@ -3,6 +3,7 @@ import React from 'react'
 import dataCategories from '../mocks/en-us/product-categories.json'
 import dataProducts from '../mocks/en-us/products.json'
 import Products from '../components/Products.jsx'
+import Spinner from '../components/Spinner.jsx';
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,12 +17,12 @@ const WrapperProductList = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 30px;
+  width: 100%;
 `
 const CategorySidebar = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 100%;
   margin-right: 10px;
 `
 const Category = styled.div`
@@ -48,6 +49,7 @@ const AllProducts = styled.div`
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  flex: 1;
 `
 const Pagination = styled.div`
   button {
@@ -82,6 +84,7 @@ function ProductList() {
     dataProducts.results
   )
   const [filterSelected, setFilterSelected] = React.useState([])
+  const [dataLoaded, setDataLoaded] = React.useState(false)
 
   const onFilterClick = (category) => {
     if (filterSelected.includes(category)) {
@@ -115,6 +118,13 @@ function ProductList() {
     setFilteredProducts(newFilterArray)
   }
 
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setDataLoaded(true)
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Wrapper>
       <WrapperProductList>
@@ -137,7 +147,11 @@ function ProductList() {
           </List>
         </CategorySidebar>
         <AllProducts>
-          <Products products={filteredProducts} />
+          {
+            dataLoaded ?
+              <Products products={filteredProducts} />
+              : <Spinner />
+          }
         </AllProducts>
       </WrapperProductList>
       <Pagination>
