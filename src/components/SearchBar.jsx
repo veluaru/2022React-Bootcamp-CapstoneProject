@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import searchIcon from '../images/search.png'
-// import { BiSearch } from 'react-icons/bi'
 
 const SearchInput = styled.input`
   border: none;

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import ProductCard from './ProductCard.jsx'
+import Products from './Products.jsx'
 
 const Wrapper = styled.div`
   display: flex;
@@ -12,13 +12,6 @@ const Wrapper = styled.div`
   border-radius: 10px;
   padding: 10px;
 `
-const CardList = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 100%;
-`
 const Title = styled.h1`
   font-family: 'Arista-Light';
   color: Orange;
@@ -29,11 +22,7 @@ function FeaturedProducts({ products: results }) {
   return (
     <Wrapper>
       <Title>Our Featured Products</Title>
-      <CardList>
-        {results.map((product) => (
-          <ProductCard key={product.id.toString()} product={product} />
-        ))}
-      </CardList>
+      <Products products={ results } />
     </Wrapper>
   )
 }

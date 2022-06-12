@@ -11,7 +11,7 @@ height: 40px;
 margin-left: 20px;
 `
 
-function Header() {
+function Header({ setView }) {
 
   const onClickCart = () => {
     console.log('Cart clicked!')
@@ -19,7 +19,7 @@ function Header() {
 
   return (
     <div className="header">
-      <div className="header__left-side">
+      <div className="header__left-side" onClick={() => setView('Home')}>
         <img src={logo} className="header__logo" alt="logo" />
         <span>LA MUEBLERIA</span>
       </div>
