@@ -54,7 +54,6 @@ const defaultCategoryStyle = {
 function ProductList() {
   const [filteredProducts, setFilteredProducts] = React.useState(dataProducts.results)
   const [filterSelected, setFilterSelected] = React.useState([])
-  console.log(filteredProducts)
 
   const onFilterClick = (category) => {
     if (filterSelected.includes(category)) {

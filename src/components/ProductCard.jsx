@@ -9,7 +9,8 @@ const Card = styled.div`
   border-radius: 10px;
   height: 100%
   max-height: 300px;
-  width: 200px;
+  width: 100%;
+  max-width: 200px;
   margin: 2% 1%;
   cursor: pointer;
   background-color: white;
