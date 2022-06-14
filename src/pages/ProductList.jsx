@@ -97,34 +97,12 @@ function ProductList() {
 
   const onFilterClick = (category) => {
     if (filterSelected.includes(category)) {
-      let previousArray = filterSelected
-      const index = previousArray.indexOf(category)
-      if (index > -1) {
-        previousArray.splice(index, 1)
-      }
-      let newArray = previousArray
-      setFilterSelected(newArray)
-      if (filterSelected.length === 0) {
-        setFilteredProducts(dataProducts.results)
-        return
-      }
-      updateProductsArray()
+      // let previousArray = filterSelected
+      // let newArray = previousArray.filter((prevCategory) => prevCategory !== category)
+      setFilterSelected((array) => array.filter((prevCategory) => prevCategory !== category))
     } else {
-      let newCategorySelected = filterSelected
-      newCategorySelected.push(category)
-      setFilterSelected(newCategorySelected)
-      updateProductsArray()
+      setFilterSelected([...filterSelected, category])
     }
-  }
-  const updateProductsArray = () => {
-    let defaultArray = dataProducts.results
-    let newFilterArray = defaultArray.filter((product) => {
-      let categoryString = product.data.category.slug.replace(/\w\S*/g, (w) =>
-        w.replace(/^\w/, (c) => c.toUpperCase())
-      )
-      return filterSelected.includes(categoryString)
-    })
-    setFilteredProducts(newFilterArray)
   }
 
   React.useEffect(() => {
@@ -133,6 +111,19 @@ function ProductList() {
     }, 2000)
     return () => clearTimeout(timer)
   }, [])
+
+
+  React.useEffect(() => {
+    let defaultArray = dataProducts.results
+    let newFilterArray = defaultArray.filter((product) => {
+      let categoryString = product.data.category.slug.replace(/\w\S*/g, (w) =>
+        w.replace(/^\w/, (c) => c.toUpperCase())
+      )
+      return filterSelected.includes(categoryString) || filterSelected.length === 0
+    })
+    setFilteredProducts(newFilterArray)
+
+  }, [filterSelected])
 
   return (
     <Wrapper>
