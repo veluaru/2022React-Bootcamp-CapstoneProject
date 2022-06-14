@@ -155,11 +155,18 @@ function ProductList() {
             ))}
           </List>
         </CategorySidebar>
-        <AllProducts style={dataLoaded && filteredProducts.length > 0 ? productsLoaded : {}}>
-          {!dataLoaded && (<Spinner />)}
-          {dataLoaded && filteredProducts.length > 0 && (<Products products={filteredProducts} />)}
-          {dataLoaded && filteredProducts.length === 0 
-          && (<Empty>There are no products :c</Empty>)}
+        <AllProducts
+          style={
+            dataLoaded && filteredProducts.length > 0 ? productsLoaded : {}
+          }
+        >
+          {!dataLoaded && <Spinner />}
+          {dataLoaded && filteredProducts.length > 0 && (
+            <Products products={filteredProducts} />
+          )}
+          {dataLoaded && filteredProducts.length === 0 && (
+            <Empty>There are no products :c</Empty>
+          )}
         </AllProducts>
       </WrapperProductList>
       <Pagination>
