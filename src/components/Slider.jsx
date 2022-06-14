@@ -17,6 +17,7 @@ function Slider({ banners: results }) {
       >
         {results.map((banner) => (
           <img
+            style={{ borderRadius: '10px' }}
             key={banner.id.toString()}
             src={banner.data.main_image.url}
             alt={banner.data.main_image.alt}

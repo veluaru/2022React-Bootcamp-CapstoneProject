@@ -15,13 +15,13 @@ code {
 @font-face {
   font-family: 'Arista-Light';
   src: local('Arista-Light'),
-    url('./fonts/Arista-Pro-Light-trial.ttf') format('truetype');
+    url('./assetss/fonts/Arista-Pro-Light-trial.ttf') format('truetype');
   font-weight: normal;
 }
 
 @font-face {
   font-family: 'Arista-Bold';
   src: local('Arista-Bold'),
-    url('./fonts/Arista-Pro-Bold-trial.ttf') format('truetype');
+    url('./assetss/fonts/Arista-Pro-Bold-trial.ttf') format('truetype');
   font-weight: bold;
 }

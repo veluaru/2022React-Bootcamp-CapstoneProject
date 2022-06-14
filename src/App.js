@@ -18,7 +18,7 @@ function App() {
   }
 
   React.useEffect(() => {
-    setViewEngine('ProductList')
+    setViewEngine('Home')
   }, [])
 
   return (

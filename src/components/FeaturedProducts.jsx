@@ -19,10 +19,11 @@ const Title = styled.h1`
 `
 
 function FeaturedProducts({ products: results }) {
+  const slicedProducts = results.slice(0, 12)
   return (
     <Wrapper>
       <Title>Our Featured Products</Title>
-      <Products products={results} />
+      <Products products={slicedProducts} />
     </Wrapper>
   )
 }

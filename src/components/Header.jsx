@@ -1,8 +1,8 @@
 import './Header.scss'
 import React from 'react'
 import styled from 'styled-components'
-import logo from '../images/logo1.png'
-import cartIcon from '../images/cart.png'
+import logo from '../assetss/images/logo1.png'
+import cartIcon from '../assetss/images/cart.png'
 import SearchBar from './SearchBar'
 
 const Icon = styled.img`

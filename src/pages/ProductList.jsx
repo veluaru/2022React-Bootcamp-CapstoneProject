@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import React from 'react'
-import dataCategories from '../mocks/en-us/product-categories.json'
-import dataProducts from '../mocks/en-us/products.json'
+import dataCategories from '../assetss/mocks/en-us/product-categories.json'
+import dataProducts from '../assetss/mocks/en-us/products.json'
 import Products from '../components/Products.jsx'
 import Spinner from '../components/Spinner.jsx'
 
@@ -64,6 +64,11 @@ const Pagination = styled.div`
     cursor: pointer;
   }
 `
+const Empty = styled.span`
+  font-family: 'Arista-Light';
+  font-size: 20px;
+  color: orange;
+`
 
 const selectedCategoryStyle = {
   color: 'black',
@@ -77,6 +82,10 @@ const activePagingStyle = {
   border: '1px solid rgb(171, 240, 245)',
   backgroundColor: 'rgb(171, 240, 245)',
   cursor: 'auto',
+}
+const productsLoaded = {
+  backgroundColor: 'rgba(255, 233, 219, 0.637)',
+  borderRadius: '10px',
 }
 
 function ProductList() {
@@ -146,8 +155,11 @@ function ProductList() {
             ))}
           </List>
         </CategorySidebar>
-        <AllProducts>
-          {dataLoaded ? <Products products={filteredProducts} /> : <Spinner />}
+        <AllProducts style={dataLoaded && filteredProducts.length > 0 ? productsLoaded : {}}>
+          {!dataLoaded && (<Spinner />)}
+          {dataLoaded && filteredProducts.length > 0 && (<Products products={filteredProducts} />)}
+          {dataLoaded && filteredProducts.length === 0 
+          && (<Empty>There are no products :c</Empty>)}
         </AllProducts>
       </WrapperProductList>
       <Pagination>

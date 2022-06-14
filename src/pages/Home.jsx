@@ -2,9 +2,9 @@ import styled from 'styled-components'
 // import { useFeaturedBanners } from '../utils/hooks/useFeaturedBanners';
 // import { useFeaturedCategories } from '../utils/hooks/useFeaturedCategories';
 // import { useFeaturedProducts } from '../utils/hooks/useFeaturedProducts';
-import dataBanners from '../mocks/en-us/featured-banners.json'
-import dataCategories from '../mocks/en-us/product-categories.json'
-import dataProducts from '../mocks/en-us/featured-products.json'
+import dataBanners from '../assetss/mocks/en-us/featured-banners.json'
+import dataCategories from '../assetss/mocks/en-us/product-categories.json'
+import dataProducts from '../assetss/mocks/en-us/featured-products.json'
 import Slider from '../components/Slider.jsx'
 import Categories from '../components/Categories.jsx'
 import FeaturedProducts from '../components/FeaturedProducts'

@@ -20,7 +20,8 @@ const Card = styled.div`
   padding: 5px 20px 5px 0;
   cursor: pointer;
   :hover {
-    box-shadow: 0px 0px 10px 1px rgba(110, 110, 110, 0.53);
+    box-shadow: 0px 0px 5px 1px rgba(110,110,110,0.53);
+    transform: scale(1.01)
   }
 `
 const CardList = styled.div`
