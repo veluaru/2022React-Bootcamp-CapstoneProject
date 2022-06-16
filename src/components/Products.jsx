@@ -13,7 +13,7 @@ function Products({ products: results }) {
   return (
     <CardList>
       {results.map((product) => (
-        <ProductCard key={product.id.toString()} product={product} />
+        <ProductCard key={product.id} product={product} />
       ))}
     </CardList>
   )

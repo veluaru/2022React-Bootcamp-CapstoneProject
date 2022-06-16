@@ -6,7 +6,7 @@ import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 
 function App() {
-  const [viewEngine, setViewEngine] = React.useState({ engine: '' })
+  const [viewEngine, setViewEngine] = React.useState('Home')
 
   const switchEngine = (engine) => {
     setViewEngine(engine)
@@ -16,10 +16,6 @@ function App() {
     Home: <Home setView={switchEngine} />,
     ProductList: <ProductList setView={switchEngine} />,
   }
-
-  React.useEffect(() => {
-    setViewEngine('ProductList')
-  }, [])
 
   return (
     <div className="app">

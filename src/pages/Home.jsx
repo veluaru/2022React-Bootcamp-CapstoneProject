@@ -1,7 +1,4 @@
 import styled from 'styled-components'
-// import { useFeaturedBanners } from '../utils/hooks/useFeaturedBanners';
-// import { useFeaturedCategories } from '../utils/hooks/useFeaturedCategories';
-// import { useFeaturedProducts } from '../utils/hooks/useFeaturedProducts';
 import dataBanners from '../assetss/mocks/en-us/featured-banners.json'
 import dataCategories from '../assetss/mocks/en-us/product-categories.json'
 import dataProducts from '../assetss/mocks/en-us/featured-products.json'
@@ -32,9 +29,6 @@ const Button = styled.button`
 `
 
 function Home({ setView }) {
-  // const { data, isLoading } = useFeaturedBanners('banner');
-  // const { dataCategories, isLoadingCategories } = useFeaturedCategories();
-  // const { dataProducts, isLoadingProducts } = useFeaturedProducts();
   return (
     <Wrapper>
       <Slider banners={dataBanners.results} />

@@ -97,8 +97,6 @@ function ProductList() {
 
   const onFilterClick = (category) => {
     if (filterSelected.includes(category)) {
-      // let previousArray = filterSelected
-      // let newArray = previousArray.filter((prevCategory) => prevCategory !== category)
       setFilterSelected((array) => array.filter((prevCategory) => prevCategory !== category))
     } else {
       setFilterSelected([...filterSelected, category])
