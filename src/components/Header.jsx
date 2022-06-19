@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import logo from '../assetss/images/logo1.png'
 import cartIcon from '../assetss/images/cart.png'
 import SearchBar from './SearchBar'
+import { Link } from "react-router-dom";
 
 const Icon = styled.img`
   width: 40px;
@@ -18,10 +19,10 @@ function Header({ setView }) {
 
   return (
     <div className="header">
-      <div className="header__left-side" onClick={() => setView('Home')}>
-        <img src={logo} className="header__logo" alt="logo" />
-        <span>LA MUEBLERIA</span>
-      </div>
+      <Link className="header__left-side" to="/home">      
+          <img src={logo} className="header__logo" alt="logo" />
+          <span>LA MUEBLERIA</span>
+      </Link>
       <div className="header__right-side">
         <SearchBar />
         <Icon onClick={onClickCart} src={cartIcon} alt="Cart Icon" />

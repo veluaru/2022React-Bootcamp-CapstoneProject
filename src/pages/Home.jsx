@@ -5,6 +5,7 @@ import dataProducts from '../assetss/mocks/en-us/featured-products.json'
 import Slider from '../components/Slider.jsx'
 import Categories from '../components/Categories.jsx'
 import FeaturedProducts from '../components/FeaturedProducts'
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -12,7 +13,7 @@ const Wrapper = styled.div`
   align-items: center;
   height: 100%;
   margin-bottom: 40px;
-  padding: 0 3%;
+  padding: 0 40px;
 `
 const Button = styled.button`
   font-size: 20px;
@@ -28,13 +29,13 @@ const Button = styled.button`
   cursor: pointer;
 `
 
-function Home({ setView }) {
+function Home() {
   return (
     <Wrapper>
       <Slider banners={dataBanners.results} />
       <Categories categories={dataCategories.results} />
       <FeaturedProducts products={dataProducts.results} />
-      <Button onClick={() => setView('ProductList')}>View all products</Button>
+      <Link to="/product-list"><Button>View all products</Button></Link>
     </Wrapper>
   )
 }
