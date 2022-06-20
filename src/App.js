@@ -21,7 +21,7 @@ function App() {
             element={<ProductList />}
           /> */}
           <Route path="/product-list">
-            <Route path=":category" element={<ProductList />} />
+            <Route path="?category" element={<ProductList />} />
             <Route path="" element={<ProductList />} />
           </Route>
           <Route

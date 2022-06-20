@@ -3,8 +3,9 @@ import React from 'react'
 import dataProducts from '../assetss/mocks/en-us/products.json'
 import Products from '../components/products/Products.jsx'
 import Spinner from '../components/Spinner.jsx'
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useFeaturedCategories } from '../utils/hooks/useFeaturedCategories';
+import { MainButton } from '../components/MainButton';
 
 const Wrapper = styled.div`
   display: flex;
@@ -95,7 +96,9 @@ function ProductList() {
   )
   const [filterSelected, setFilterSelected] = React.useState([])
   const [dataLoaded, setDataLoaded] = React.useState(false)
-  const { category } = useParams();
+  const { search } = useLocation();
+  const searchParams = new URLSearchParams(search);
+  const category = searchParams.get("category");
 
   const onFilterClick = (category) => {
     if (filterSelected.includes(category)) {
@@ -103,6 +106,9 @@ function ProductList() {
     } else {
       setFilterSelected([...filterSelected, category])
     }
+  }
+  const clearFilters = () => {
+    setFilterSelected([])
   }
 
   React.useEffect(() => {
@@ -149,6 +155,7 @@ function ProductList() {
                   {name}
                 </Category>
               ))}
+              {filterSelected.length > 0 && <MainButton onClick={clearFilters}>Clear</MainButton>}
             </List>
           }
 
