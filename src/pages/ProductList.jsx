@@ -1,9 +1,10 @@
 import styled from 'styled-components'
 import React from 'react'
-import dataCategories from '../assetss/mocks/en-us/product-categories.json'
 import dataProducts from '../assetss/mocks/en-us/products.json'
-import Products from '../components/Products.jsx'
+import Products from '../components/products/Products.jsx'
 import Spinner from '../components/Spinner.jsx'
+import { useParams } from "react-router-dom";
+import { useFeaturedCategories } from '../utils/hooks/useFeaturedCategories';
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,14 +24,13 @@ const CategorySidebar = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  margin-right: 10px;
+  margin-right: 15px;
 `
 const Category = styled.div`
-  max-width: 160px;
-  width: 100%;
   padding: 10px 5px;
   cursor: pointer;
   border-bottom: 1px solid rgb(207, 207, 207);
+  padding-right: 10px;
 `
 const List = styled.div`
   display: flex;
@@ -89,11 +89,13 @@ const productsLoaded = {
 }
 
 function ProductList() {
+  const { dataCategories, isLoadingCategories } = useFeaturedCategories();
   const [filteredProducts, setFilteredProducts] = React.useState(
     dataProducts.results
   )
   const [filterSelected, setFilterSelected] = React.useState([])
   const [dataLoaded, setDataLoaded] = React.useState(false)
+  const { category } = useParams();
 
   const onFilterClick = (category) => {
     if (filterSelected.includes(category)) {
@@ -110,6 +112,11 @@ function ProductList() {
     return () => clearTimeout(timer)
   }, [])
 
+  React.useEffect(() => {
+    if (category) {
+      setFilterSelected([category])
+    }
+  }, [category])
 
   React.useEffect(() => {
     let defaultArray = dataProducts.results
@@ -120,7 +127,6 @@ function ProductList() {
       return filterSelected.includes(categoryString) || filterSelected.length === 0
     })
     setFilteredProducts(newFilterArray)
-
   }, [filterSelected])
 
   return (
@@ -128,21 +134,24 @@ function ProductList() {
       <WrapperProductList>
         <CategorySidebar>
           <Title>Categories</Title>
-          <List>
-            {dataCategories.results.map(({ id, data: { name } }) => (
-              <Category
-                style={
-                  filterSelected.includes(name)
-                    ? selectedCategoryStyle
-                    : defaultCategoryStyle
-                }
-                key={id.toString()}
-                onClick={() => onFilterClick(name)}
-              >
-                {name}
-              </Category>
-            ))}
-          </List>
+          {isLoadingCategories || !dataLoaded ? <Spinner /> :
+            <List>
+              {dataCategories.results.map(({ id, data: { name } }) => (
+                <Category
+                  style={
+                    filterSelected.includes(name)
+                      ? selectedCategoryStyle
+                      : defaultCategoryStyle
+                  }
+                  key={id.toString()}
+                  onClick={() => onFilterClick(name)}
+                >
+                  {name}
+                </Category>
+              ))}
+            </List>
+          }
+
         </CategorySidebar>
         <AllProducts
           style={

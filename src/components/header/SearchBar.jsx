@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import searchIcon from '../assetss/images/search.png'
+import searchIcon from '../../assetss/images/search.png'
 
 const SearchInput = styled.input`
   border: none;

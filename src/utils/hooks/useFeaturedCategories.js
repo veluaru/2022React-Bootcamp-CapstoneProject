@@ -27,7 +27,7 @@ export function useFeaturedCategories() {
         const response = await fetch(
           `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
             '[[at(document.type, "category")]]'
-          )}&lang=en-us&pageSize=5`,
+          )}&lang=en-us&pageSize=30`,
           {
             signal: controller.signal,
           }

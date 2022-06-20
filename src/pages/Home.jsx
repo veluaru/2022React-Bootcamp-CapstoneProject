@@ -1,10 +1,13 @@
 import styled from 'styled-components'
-import dataBanners from '../assetss/mocks/en-us/featured-banners.json'
-import dataCategories from '../assetss/mocks/en-us/product-categories.json'
-import dataProducts from '../assetss/mocks/en-us/featured-products.json'
+// import dataCategories from '../assetss/mocks/en-us/product-categories.json'
+// import dataProducts from '../assetss/mocks/en-us/featured-products.json'
 import Slider from '../components/Slider.jsx'
-import Categories from '../components/Categories.jsx'
-import FeaturedProducts from '../components/FeaturedProducts'
+import SliderSkeleton from '../components/skeletons/SliderSkeleton'
+import FeaturedCategories from '../components/FeaturedCategories.jsx'
+import FeaturedProducts from '../components/products/FeaturedProducts'
+import { useFeaturedBanners } from '../utils/hooks/useFeaturedBanners';
+import { useFeaturedCategories } from '../utils/hooks/useFeaturedCategories';
+import { useFeaturedProducts } from '../utils/hooks/useFeaturedProducts';
 import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
@@ -30,11 +33,15 @@ const Button = styled.button`
 `
 
 function Home() {
+  const { data, isLoading }  = useFeaturedBanners();
+  const { dataCategories, isLoadingCategories }  = useFeaturedCategories();
+  const { dataFeaturedProducts, isLoadingFeaturedProducts }  = useFeaturedProducts();
+  
   return (
     <Wrapper>
-      <Slider banners={dataBanners.results} />
-      <Categories categories={dataCategories.results} />
-      <FeaturedProducts products={dataProducts.results} />
+      {isLoading ? <SliderSkeleton /> : <Slider banners={data.results}/>}
+      {!isLoadingCategories &&  <FeaturedCategories categories={dataCategories.results} />}
+      {!isLoadingFeaturedProducts && <FeaturedProducts products={dataFeaturedProducts.results} />}
       <Link to="/product-list"><Button>View all products</Button></Link>
     </Wrapper>
   )

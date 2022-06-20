@@ -3,11 +3,11 @@ import { API_BASE_URL } from '../constants'
 import { useLatestAPI } from './useLatestAPI'
 
 export function useFeaturedProducts() {
-  const { ref: apiRef, isLoadingProducts: isApiMetadataLoading } =
+  const { ref: apiRef, isLoadingFeaturedProducts: isApiMetadataLoading } =
     useLatestAPI()
   const [featuredProducts, setFeaturedProducts] = useState(() => ({
-    dataProducts: {},
-    isLoadingProducts: true,
+    dataFeaturedProducts: {},
+    isLoadingFeaturedProducts: true,
   }))
 
   useEffect(() => {
@@ -20,25 +20,27 @@ export function useFeaturedProducts() {
     async function getFeaturedProducts() {
       try {
         setFeaturedProducts({
-          dataProducts: {},
-          isLoadingProducts: true,
+          dataFeaturedProducts: {},
+          isLoadingFeaturedProducts: true,
         })
 
         const response = await fetch(
           `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
             '[[at(document.type, "product")]]'
-          )}&lang=en-us&pageSize=5`,
+          )}&q=${encodeURIComponent(
+            '[[at(document.tags, ["Featured"])]]'
+          )}&lang=en-us&pageSize=16`,
           {
             signal: controller.signal,
           }
         )
-        const dataProducts = await response.json()
+        const dataFeaturedProducts = await response.json()
 
-        setFeaturedProducts({ dataProducts, isLoadingProducts: false })
+        setFeaturedProducts({ dataFeaturedProducts, isLoadingFeaturedProducts: false })
       } catch (err) {
         setFeaturedProducts({
-          dataProducts: {},
-          isLoadingProducts: false,
+          dataFeaturedProducts: {},
+          isLoadingFeaturedProducts: false,
         })
         console.error(err)
       }
