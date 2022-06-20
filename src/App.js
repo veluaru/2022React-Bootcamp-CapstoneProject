@@ -1,15 +1,26 @@
 import './App.css'
+import React from 'react'
 import Home from './pages/Home.jsx'
+import ProductList from './pages/ProductList.jsx'
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 
 function App() {
+  const [viewEngine, setViewEngine] = React.useState('Home')
+
+  const switchEngine = (engine) => {
+    setViewEngine(engine)
+  }
+
+  const renderMap = {
+    Home: <Home setView={switchEngine} />,
+    ProductList: <ProductList setView={switchEngine} />,
+  }
+
   return (
     <div className="app">
-      <Header />
-      <div className="app-content">
-        <Home />
-      </div>
+      <Header setView={switchEngine} />
+      <div className="app-content">{renderMap[viewEngine]}</div>
       <Footer />
     </div>
   )

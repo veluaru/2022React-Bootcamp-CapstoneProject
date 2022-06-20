@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import cartPlusIcon from '../images/cart-plus.png'
+import cartPlusIcon from '../assetss/images/cart-plus.png'
 
 const Card = styled.div`
   position: relative;
@@ -9,12 +9,14 @@ const Card = styled.div`
   border-radius: 10px;
   height: 100%
   max-height: 300px;
-  width: 200px;
+  width: 100%;
+  max-width: 200px;
   margin: 2% 1%;
   cursor: pointer;
   background-color: white;
   :hover {
-      box-shadow: 0px 0px 10px 1px rgba(110,110,110,0.53);
+      box-shadow: 0px 0px 5px 1px rgba(110,110,110,0.53);
+      transform: scale(1.01)
   }
 `
 const Image = styled.img`
@@ -42,6 +44,7 @@ const Category = styled.span`
 `
 const Price = styled.span`
   color: orange;
+  font-weight: bold;
 `
 const Wrapper = styled.div`
   max-height: 30%;
@@ -72,13 +75,10 @@ function ProductCard({ product }) {
       <Wrapper>
         <Name>{product.data.name}</Name>
         <Category>{product.data.category.slug}</Category>
-        <Price>Price: ${product.data.price}</Price>
+        <Price>${product.data.price}</Price>
       </Wrapper>
       <Icon>
-        <img
-          src={cartPlusIcon}
-          alt='Cart Plus Icon'
-        />
+        <img src={cartPlusIcon} alt="Cart Plus Icon" />
       </Icon>
     </Card>
   )

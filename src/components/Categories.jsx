@@ -6,6 +6,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   margin: 20px 0;
+  width: 100%;
 `
 const Card = styled.div`
   display: flex;
@@ -19,7 +20,8 @@ const Card = styled.div`
   padding: 5px 20px 5px 0;
   cursor: pointer;
   :hover {
-    box-shadow: 0px 0px 10px 1px rgba(110, 110, 110, 0.53);
+    box-shadow: 0px 0px 5px 1px rgba(110, 110, 110, 0.53);
+    transform: scale(1.01);
   }
 `
 const CardList = styled.div`
@@ -47,10 +49,9 @@ function Categories({ categories: results }) {
     <Wrapper>
       <Title>Categories</Title>
       <CardList>
-        {results.map(({id, data: {main_image, name}}) => (
+        {results.map(({ id, data: { main_image, name } }) => (
           <Card key={id.toString()}>
-            <Image src={main_image.url}
-              alt={main_image.alt} />
+            <Image src={main_image.url} alt={main_image.alt} />
             {name}
           </Card>
         ))}

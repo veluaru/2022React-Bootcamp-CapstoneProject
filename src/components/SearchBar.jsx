@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import searchIcon from '../images/search.png'
-// import { BiSearch } from 'react-icons/bi'
+import searchIcon from '../assetss/images/search.png'
 
 const SearchInput = styled.input`
   border: none;
@@ -29,10 +28,7 @@ function SearchBar() {
   }
   return (
     <Wrapper>
-      <Icon
-        src={searchIcon}
-        alt='Search Icon'
-      />
+      <Icon src={searchIcon} alt="Search Icon" />
       <SearchInput
         disabled
         placeholder="Search here..."
