@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import cartPlusIcon from '../../assetss/images/cart-plus.png'
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
 const Card = styled.div`
   position: relative;

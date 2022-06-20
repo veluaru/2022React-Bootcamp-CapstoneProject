@@ -36,7 +36,10 @@ export function useFeaturedProducts() {
         )
         const dataFeaturedProducts = await response.json()
 
-        setFeaturedProducts({ dataFeaturedProducts, isLoadingFeaturedProducts: false })
+        setFeaturedProducts({
+          dataFeaturedProducts,
+          isLoadingFeaturedProducts: false,
+        })
       } catch (err) {
         setFeaturedProducts({
           dataFeaturedProducts: {},

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const MainButton = styled.button`
   font-size: 20px;
@@ -14,5 +14,4 @@ const MainButton = styled.button`
   cursor: pointer;
 `
 
-export { MainButton };
-
+export { MainButton }

@@ -3,10 +3,10 @@ import React from 'react'
 // import dataProducts from '../assetss/mocks/en-us/products.json'
 import Products from '../components/products/Products.jsx'
 import Spinner from '../components/Spinner.jsx'
-import { useLocation } from "react-router-dom";
-import { useFeaturedCategories } from '../utils/hooks/useFeaturedCategories';
-import { useProducts } from '../utils/hooks/useProducts';
-import { MainButton } from '../components/MainButton';
+import { useLocation } from 'react-router-dom'
+import { useFeaturedCategories } from '../utils/hooks/useFeaturedCategories'
+import { useProducts } from '../utils/hooks/useProducts'
+import { MainButton } from '../components/MainButton'
 
 const Wrapper = styled.div`
   display: flex;
@@ -91,18 +91,20 @@ const productsLoaded = {
 }
 
 function ProductList() {
-  const { dataCategories, isLoadingCategories } = useFeaturedCategories();
-  const { dataProducts, isLoadingProducts } = useProducts(1);
+  const { dataCategories, isLoadingCategories } = useFeaturedCategories()
+  const { dataProducts, isLoadingProducts } = useProducts(1)
   const [filteredProducts, setFilteredProducts] = React.useState([])
   const [filterSelected, setFilterSelected] = React.useState([])
   const [page, setPage] = React.useState(1)
-  const { search } = useLocation();
-  const searchParams = new URLSearchParams(search);
-  const category = searchParams.get("category");
+  const { search } = useLocation()
+  const searchParams = new URLSearchParams(search)
+  const category = searchParams.get('category')
 
   const onFilterClick = (category) => {
     if (filterSelected.includes(category)) {
-      setFilterSelected((array) => array.filter((prevCategory) => prevCategory !== category))
+      setFilterSelected((array) =>
+        array.filter((prevCategory) => prevCategory !== category)
+      )
     } else {
       setFilterSelected([...filterSelected, category])
     }
@@ -113,21 +115,21 @@ function ProductList() {
 
   const clickPages = (type) => {
     console.log(type)
-  //   if (type === 'next') {
-  //     if (dataCategories.results === 12) {
-  //       setPage(page + 1);
-  //       // volver a hacer petición
-  //       // useProducts(page)
-  //       // clearFilters()
-  //     }
-  //   } else {
-  //     if (page > 1) {
-  //       setPage(page - 1);
-  //       // volver a hacer petición
-  //       // useProducts(page)
-  //       // clearFilters()
-  //     }
-  //   }
+    //   if (type === 'next') {
+    //     if (dataCategories.results === 12) {
+    //       setPage(page + 1);
+    //       // volver a hacer petición
+    //       // useProducts(page)
+    //       // clearFilters()
+    //     }
+    //   } else {
+    //     if (page > 1) {
+    //       setPage(page - 1);
+    //       // volver a hacer petición
+    //       // useProducts(page)
+    //       // clearFilters()
+    //     }
+    //   }
   }
 
   React.useEffect(() => {
@@ -147,7 +149,9 @@ function ProductList() {
         let categoryString = product.data.category.slug.replace(/\w\S*/g, (w) =>
           w.replace(/^\w/, (c) => c.toUpperCase())
         )
-        return filterSelected.includes(categoryString) || filterSelected.length === 0
+        return (
+          filterSelected.includes(categoryString) || filterSelected.length === 0
+        )
       })
       setFilteredProducts(newFilterArray)
     }
@@ -158,7 +162,9 @@ function ProductList() {
       <WrapperProductList>
         <CategorySidebar>
           <Title>Categories</Title>
-          {isLoadingCategories || isLoadingProducts ? <Spinner /> :
+          {isLoadingCategories || isLoadingProducts ? (
+            <Spinner />
+          ) : (
             <List>
               {dataCategories.results.map(({ id, data: { name } }) => (
                 <Category
@@ -173,14 +179,17 @@ function ProductList() {
                   {name}
                 </Category>
               ))}
-              {filterSelected.length > 0 && <MainButton onClick={clearFilters}>Clear</MainButton>}
+              {filterSelected.length > 0 && (
+                <MainButton onClick={clearFilters}>Clear</MainButton>
+              )}
             </List>
-          }
-
+          )}
         </CategorySidebar>
         <AllProducts
           style={
-            !isLoadingProducts && filteredProducts.length > 0 ? productsLoaded : {}
+            !isLoadingProducts && filteredProducts.length > 0
+              ? productsLoaded
+              : {}
           }
         >
           {isLoadingProducts && <Spinner />}

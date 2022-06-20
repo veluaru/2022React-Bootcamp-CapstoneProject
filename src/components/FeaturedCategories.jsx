@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
 const Wrapper = styled.div`
   display: flex;
@@ -55,10 +55,11 @@ function FeaturedCategories({ categories: results }) {
       <Title>Categories</Title>
       <CardList>
         {results.map(({ id, data: { main_image, name } }) => (
-          <Link 
-            style={{ textDecoration: 'none' }} 
-            to={`/product-list?category=${name}`} 
-            key={id.toString()}>
+          <Link
+            style={{ textDecoration: 'none' }}
+            to={`/product-list?category=${name}`}
+            key={id.toString()}
+          >
             <Card>
               <Image src={main_image.url} alt={main_image.alt} />
               <Name>{name}</Name>

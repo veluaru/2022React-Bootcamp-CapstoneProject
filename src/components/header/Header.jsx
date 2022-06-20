@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import logo from '../../assetss/images/logo1.png'
 import cartIcon from '../../assetss/images/cart.png'
 import SearchBar from './SearchBar.jsx'
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
 const Icon = styled.img`
   width: 40px;
@@ -19,9 +19,9 @@ function Header() {
 
   return (
     <div className="header">
-      <Link className="header__left-side" to="/home">      
-          <img src={logo} className="header__logo" alt="logo" />
-          <span>LA MUEBLERIA</span>
+      <Link className="header__left-side" to="/home">
+        <img src={logo} className="header__logo" alt="logo" />
+        <span>LA MUEBLERIA</span>
       </Link>
       <div className="header__right-side">
         <SearchBar />

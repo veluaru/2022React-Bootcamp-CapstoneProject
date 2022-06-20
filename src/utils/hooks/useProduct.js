@@ -3,8 +3,7 @@ import { API_BASE_URL } from '../constants'
 import { useLatestAPI } from './useLatestAPI'
 
 export function useProduct(id) {
-  const { ref: apiRef, isLoadingProduct: isApiMetadataLoading } =
-    useLatestAPI()
+  const { ref: apiRef, isLoadingProduct: isApiMetadataLoading } = useLatestAPI()
   const [product, setProduct] = useState(() => ({
     dataProduct: {},
     isLoadingProduct: true,
@@ -12,7 +11,7 @@ export function useProduct(id) {
 
   useEffect(() => {
     if (!apiRef || isApiMetadataLoading) {
-      return () => { }
+      return () => {}
     }
 
     const controller = new AbortController()
