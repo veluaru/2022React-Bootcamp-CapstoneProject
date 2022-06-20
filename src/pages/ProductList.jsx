@@ -1,10 +1,11 @@
 import styled from 'styled-components'
 import React from 'react'
-import dataProducts from '../assetss/mocks/en-us/products.json'
+// import dataProducts from '../assetss/mocks/en-us/products.json'
 import Products from '../components/products/Products.jsx'
 import Spinner from '../components/Spinner.jsx'
 import { useLocation } from "react-router-dom";
 import { useFeaturedCategories } from '../utils/hooks/useFeaturedCategories';
+import { useProducts } from '../utils/hooks/useProducts';
 import { MainButton } from '../components/MainButton';
 
 const Wrapper = styled.div`
@@ -79,11 +80,11 @@ const defaultCategoryStyle = {
   color: 'black',
   backgroundColor: 'white',
 }
-const activePagingStyle = {
-  border: '1px solid rgb(171, 240, 245)',
-  backgroundColor: 'rgb(171, 240, 245)',
-  cursor: 'auto',
-}
+// const activePagingStyle = {
+//   border: '1px solid rgb(171, 240, 245)',
+//   backgroundColor: 'rgb(171, 240, 245)',
+//   cursor: 'auto',
+// }
 const productsLoaded = {
   backgroundColor: 'rgba(255, 233, 219, 0.637)',
   borderRadius: '10px',
@@ -91,11 +92,10 @@ const productsLoaded = {
 
 function ProductList() {
   const { dataCategories, isLoadingCategories } = useFeaturedCategories();
-  const [filteredProducts, setFilteredProducts] = React.useState(
-    dataProducts.results
-  )
+  const { dataProducts, isLoadingProducts } = useProducts(1);
+  const [filteredProducts, setFilteredProducts] = React.useState([])
   const [filterSelected, setFilterSelected] = React.useState([])
-  const [dataLoaded, setDataLoaded] = React.useState(false)
+  const [page, setPage] = React.useState(1)
   const { search } = useLocation();
   const searchParams = new URLSearchParams(search);
   const category = searchParams.get("category");
@@ -111,12 +111,24 @@ function ProductList() {
     setFilterSelected([])
   }
 
-  React.useEffect(() => {
-    const timer = setTimeout(() => {
-      setDataLoaded(true)
-    }, 2000)
-    return () => clearTimeout(timer)
-  }, [])
+  const clickPages = (type) => {
+    console.log(type)
+  //   if (type === 'next') {
+  //     if (dataCategories.results === 12) {
+  //       setPage(page + 1);
+  //       // volver a hacer petición
+  //       // useProducts(page)
+  //       // clearFilters()
+  //     }
+  //   } else {
+  //     if (page > 1) {
+  //       setPage(page - 1);
+  //       // volver a hacer petición
+  //       // useProducts(page)
+  //       // clearFilters()
+  //     }
+  //   }
+  }
 
   React.useEffect(() => {
     if (category) {
@@ -125,22 +137,28 @@ function ProductList() {
   }, [category])
 
   React.useEffect(() => {
-    let defaultArray = dataProducts.results
-    let newFilterArray = defaultArray.filter((product) => {
-      let categoryString = product.data.category.slug.replace(/\w\S*/g, (w) =>
-        w.replace(/^\w/, (c) => c.toUpperCase())
-      )
-      return filterSelected.includes(categoryString) || filterSelected.length === 0
-    })
-    setFilteredProducts(newFilterArray)
-  }, [filterSelected])
+    setFilteredProducts(dataProducts.results || [])
+  }, [dataProducts])
+
+  React.useEffect(() => {
+    if (dataProducts.results) {
+      let defaultArray = dataProducts.results
+      let newFilterArray = defaultArray.filter((product) => {
+        let categoryString = product.data.category.slug.replace(/\w\S*/g, (w) =>
+          w.replace(/^\w/, (c) => c.toUpperCase())
+        )
+        return filterSelected.includes(categoryString) || filterSelected.length === 0
+      })
+      setFilteredProducts(newFilterArray)
+    }
+  }, [filterSelected, dataProducts])
 
   return (
     <Wrapper>
       <WrapperProductList>
         <CategorySidebar>
           <Title>Categories</Title>
-          {isLoadingCategories || !dataLoaded ? <Spinner /> :
+          {isLoadingCategories || isLoadingProducts ? <Spinner /> :
             <List>
               {dataCategories.results.map(({ id, data: { name } }) => (
                 <Category
@@ -162,28 +180,23 @@ function ProductList() {
         </CategorySidebar>
         <AllProducts
           style={
-            dataLoaded && filteredProducts.length > 0 ? productsLoaded : {}
+            !isLoadingProducts && filteredProducts.length > 0 ? productsLoaded : {}
           }
         >
-          {!dataLoaded && <Spinner />}
-          {dataLoaded && filteredProducts.length > 0 && (
+          {isLoadingProducts && <Spinner />}
+          {!isLoadingProducts && filteredProducts.length > 0 && (
             <Products products={filteredProducts} />
           )}
-          {dataLoaded && filteredProducts.length === 0 && (
+          {!isLoadingProducts && filteredProducts.length === 0 && (
             <Empty>There are no products :c</Empty>
           )}
         </AllProducts>
       </WrapperProductList>
       <Pagination>
         <div>
-          <button>&laquo;</button>
-          <button style={activePagingStyle}>1</button>
-          <button>2</button>
-          <button>3</button>
-          <button>4</button>
-          <button>5</button>
-          <button>6</button>
-          <button>&raquo;</button>
+          <button onClick={() => clickPages('prev')}>&laquo;</button>
+          <span>{page}</span>
+          <button onClick={() => clickPages('next')}>&raquo;</button>
         </div>
       </Pagination>
     </Wrapper>
