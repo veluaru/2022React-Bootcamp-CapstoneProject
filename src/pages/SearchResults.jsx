@@ -70,7 +70,7 @@ function ProductList() {
             <Products products={dataSearchTerm.results} />
           )}
           {!isLoadingSearchTerm && dataSearchTerm.results.length === 0 && (
-            <Empty>There are no products :c</Empty>
+            <Empty>There are no matching products :c</Empty>
           )}
         </AllProducts>
       </WrapperProductList>

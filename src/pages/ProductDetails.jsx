@@ -10,7 +10,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content:center;
-  background-color: rgb(255, 233, 219, 0.637);
   border-radius: 10px;
   width: 100%;
   padding: 20px 0;
@@ -18,6 +17,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content:center;
+    margin-bottom: 15px;
     @media (max-width: 750px) {
       display: flex;
       flex-direction: column;
@@ -59,7 +59,35 @@ const ColumnText = styled.div`
   }
 `
 const ColumnSpecs = styled.div`
-  width: 100%;
+  padding: 0 7%;
+  display: flex;
+  flex-direction: column !important;
+  margin-bottom: 20px;
+  border-top: 1px solid rgb(201, 200, 199);
+  @media (max-width: 750px) {
+    padding: 0 3%;
+    align-items: flex-start !important;
+  }
+`
+const SpecInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-start !important;
+  span {
+    color: orange;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  p {
+    margin: 5px 0;
+  }
+  @media (max-width: 750px) {
+    padding: 0px;
+    display: flex;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+  }
 `
 const AddToCart = styled.span`
   display: flex;
@@ -115,7 +143,7 @@ const Sku = styled.span`
 `
 
 
-function ProductList() {
+function ProductDetails() {
   const { id } = useParams()
   const { dataProduct, isLoadingProduct } = useProduct(id)
   const [numberAddToCart, setNumberAddToCart] = React.useState(1)
@@ -159,7 +187,13 @@ function ProductList() {
             </ColumnText>
           </div>
           <ColumnSpecs>
-            <h1>Specs</h1>
+            <h1>Specifications</h1>
+            {dataProduct.results[0].data.specs.map((spec, index) => 
+              <SpecInfo key={index}>
+                <span>{spec.spec_name}:</span>
+                <p>{spec.spec_value}</p>
+              </SpecInfo>
+            )}
           </ColumnSpecs>
         </Wrapper>
       }
@@ -169,4 +203,4 @@ function ProductList() {
   )
 }
 
-export default ProductList
+export default ProductDetails
