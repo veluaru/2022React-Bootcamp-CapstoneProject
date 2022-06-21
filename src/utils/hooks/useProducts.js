@@ -27,7 +27,7 @@ export function useProducts(page) {
         const response = await fetch(
           `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
             '[[at(document.type, "product")]]'
-          )}&lang=en-us&pageSize=${page * 12}`,
+          )}&lang=en-us&pageSize=12&page=${page}`,
           {
             signal: controller.signal,
           }

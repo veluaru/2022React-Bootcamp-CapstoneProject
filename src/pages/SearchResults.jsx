@@ -50,10 +50,23 @@ const productsLoaded = {
 }
 
 function ProductList() {
+  const [page, setPage] = React.useState(1)
   const { search } = useLocation()
   const searchParams = new URLSearchParams(search)
   const searchTerm = searchParams.get('q')
-  const { dataSearchTerm, isLoadingSearchTerm } = useSearchTerm(searchTerm)
+  const { dataSearchTerm, isLoadingSearchTerm } = useSearchTerm(searchTerm, page)
+
+  const clickPages = (type) => {
+      if (type) {
+        if (dataSearchTerm.results.length === 20) {
+          setPage(page + 1);
+        }
+      } else {
+        if (page > 1) {
+          setPage(page - 1);
+        }
+      }
+  }
 
   return (
     <Wrapper>
@@ -78,10 +91,12 @@ function ProductList() {
         {!isLoadingSearchTerm &&
           <div>
             <button 
-            style={dataSearchTerm.results.length < 20 ? {cursor: 'unset'}: {}} 
-            disabled={dataSearchTerm.results.length < 20} >&laquo;</button>
+            onClick={() => clickPages(false)}
+            style={page <= 1 ? {cursor: 'unset'}: {}} 
+            disabled={page <= 1} >&laquo;</button>
             <span>1</span>
             <button 
+            onClick={() => clickPages(true)}
             style={dataSearchTerm.results.length < 20 ? {cursor: 'unset'}: {}}
             disabled={dataSearchTerm.results.length < 20}>&raquo;</button>
           </div>

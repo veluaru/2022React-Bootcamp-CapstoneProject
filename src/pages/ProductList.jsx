@@ -54,6 +54,7 @@ const AllProducts = styled.div`
   flex: 1;
 `
 const Pagination = styled.div`
+  font-weight: bold;
   button {
     font-size: 16px;
     font-weight: bold;
@@ -61,7 +62,7 @@ const Pagination = styled.div`
     background-color: rgb(227, 230, 230);
     border-radius: 5px;
     color: black;
-    margin 5px;
+    margin: 5px 20px;
     padding: 6px 12px;
     cursor: pointer;
   }
@@ -80,22 +81,17 @@ const defaultCategoryStyle = {
   color: 'black',
   backgroundColor: 'white',
 }
-// const activePagingStyle = {
-//   border: '1px solid rgb(171, 240, 245)',
-//   backgroundColor: 'rgb(171, 240, 245)',
-//   cursor: 'auto',
-// }
 const productsLoaded = {
   backgroundColor: 'rgba(255, 233, 219, 0.637)',
   borderRadius: '10px',
 }
 
 function ProductList() {
-  const { dataCategories, isLoadingCategories } = useFeaturedCategories()
-  let { dataProducts, isLoadingProducts } = useProducts(1)
   const [filteredProducts, setFilteredProducts] = React.useState([])
   const [filterSelected, setFilterSelected] = React.useState([])
   const [page, setPage] = React.useState(1)
+  const { dataCategories, isLoadingCategories } = useFeaturedCategories()
+  let { dataProducts, isLoadingProducts } = useProducts(page)
   const { search } = useLocation()
   const searchParams = new URLSearchParams(search)
   const category = searchParams.get('category')
@@ -114,17 +110,13 @@ function ProductList() {
   }
 
   const clickPages = (type) => {
-      if (type === 'next') {
-        if (dataCategories.results === 12) {
+      if (type) {
+        if (dataProducts.results.length === 12) {
           setPage(page + 1);
-          // [ dataProducts, isLoadingProducts ] = useProducts(page + 1)
-          // clearFilters()
         }
       } else {
         if (page > 1) {
           setPage(page - 1);
-          // [ dataProducts, isLoadingProducts ] = useProducts(page - 1)
-          // clearFilters()
         }
       }
   }
@@ -199,11 +191,19 @@ function ProductList() {
         </AllProducts>
       </WrapperProductList>
       <Pagination>
-        <div>
-          <button onClick={() => clickPages('prev')}>&laquo;</button>
-          <span>{page}</span>
-          <button onClick={() => clickPages('next')}>&raquo;</button>
-        </div>
+        {!isLoadingProducts &&
+          <div>
+            <button 
+            onClick={() => clickPages(false)}
+            style={page <= 1 ? {cursor: 'unset'}: {}} 
+            disabled={page <= 1} >&laquo;</button>
+            <span>1</span>
+            <button 
+            onClick={() => clickPages(true)}
+            style={dataProducts.results.length < 12 ? {cursor: 'unset'}: {}}
+            disabled={dataProducts.results.length < 12}>&raquo;</button>
+          </div>
+        }
       </Pagination>
     </Wrapper>
   )

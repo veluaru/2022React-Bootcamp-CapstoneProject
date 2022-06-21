@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { API_BASE_URL } from '../constants'
 import { useLatestAPI } from './useLatestAPI'
 
-export function useSearchTerm(term) {
+export function useSearchTerm(term, page) {
   const { ref: apiRef, isLoadingSearchTerm: isApiMetadataLoading } = useLatestAPI()
   const [searchTerm, setSearchTerm] = useState(() => ({
     dataSearchTerm: {},
@@ -28,7 +28,7 @@ export function useSearchTerm(term) {
             '[[at(document.type, "product")]]'
           )}&q=${encodeURIComponent(
             '[[fulltext(document, "'+term+'")]]'
-          )}&lang=en-us&pageSize=20`,
+          )}&lang=en-us&pageSize=20&page=${page}`,
           {
             signal: controller.signal,
           }
@@ -49,7 +49,7 @@ export function useSearchTerm(term) {
     return () => {
       controller.abort()
     }
-  }, [apiRef, isApiMetadataLoading, term])
+  }, [apiRef, isApiMetadataLoading, term, page])
 
   return searchTerm
 }
