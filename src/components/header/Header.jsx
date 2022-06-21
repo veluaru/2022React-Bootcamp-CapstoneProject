@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 const Icon = styled.img`
   width: 40px;
   height: 40px;
-  margin-left: 20px;
+  margin-left: 25px;
 `
 
 function Header() {

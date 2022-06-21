@@ -5,6 +5,7 @@ import ProductList from './pages/ProductList.jsx'
 import ProductDetails from './pages/ProductDetails.jsx'
 import Header from './components/header/Header.jsx'
 import Footer from './components/Footer.jsx'
+import SearchResults from './pages/SearchResults.jsx'
 import { Routes, Route } from 'react-router-dom'
 
 function App() {
@@ -22,6 +23,10 @@ function App() {
           <Route path="/product-list">
             <Route path="?category" element={<ProductList />} />
             <Route path="" element={<ProductList />} />
+          </Route>
+          <Route path="/search">
+            <Route path="?q" element={<SearchResults />} />
+            <Route path="" element={<SearchResults />} />
           </Route>
           <Route path="/product-details/:id" element={<ProductDetails />} />
         </Routes>

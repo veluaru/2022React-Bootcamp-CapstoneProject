@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import searchIcon from '../../assetss/images/search.png'
+import { Link } from 'react-router-dom'
 
 const SearchInput = styled.input`
   border: none;
-  border-bottom: 2px solid orange;
   background-color: transparent;
   outline: none;
   margin: 0 5px;
@@ -15,10 +15,12 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  border-bottom: 2px solid orange;
 `
 const Icon = styled.img`
   width: 25px;
   height: 25px;
+  cursor: pointer;
 `
 
 function SearchBar() {
@@ -28,14 +30,15 @@ function SearchBar() {
   }
   return (
     <Wrapper>
-      <Icon src={searchIcon} alt="Search Icon" />
       <SearchInput
-        disabled
-        placeholder="Search here..."
+        placeholder="Type here..."
         value={searchText}
         type="text"
         onChange={onSearchValueChange}
       />
+      <Link to={`/search?q=${searchText}`}>
+        <Icon src={searchIcon} alt="Search Icon" />
+      </Link>
     </Wrapper>
   )
 }

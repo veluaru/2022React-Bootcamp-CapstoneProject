@@ -92,7 +92,7 @@ const productsLoaded = {
 
 function ProductList() {
   const { dataCategories, isLoadingCategories } = useFeaturedCategories()
-  const { dataProducts, isLoadingProducts } = useProducts(1)
+  let { dataProducts, isLoadingProducts } = useProducts(1)
   const [filteredProducts, setFilteredProducts] = React.useState([])
   const [filterSelected, setFilterSelected] = React.useState([])
   const [page, setPage] = React.useState(1)
@@ -114,22 +114,19 @@ function ProductList() {
   }
 
   const clickPages = (type) => {
-    console.log(type)
-    //   if (type === 'next') {
-    //     if (dataCategories.results === 12) {
-    //       setPage(page + 1);
-    //       // volver a hacer petición
-    //       // useProducts(page)
-    //       // clearFilters()
-    //     }
-    //   } else {
-    //     if (page > 1) {
-    //       setPage(page - 1);
-    //       // volver a hacer petición
-    //       // useProducts(page)
-    //       // clearFilters()
-    //     }
-    //   }
+      if (type === 'next') {
+        if (dataCategories.results === 12) {
+          setPage(page + 1);
+          // [ dataProducts, isLoadingProducts ] = useProducts(page + 1)
+          // clearFilters()
+        }
+      } else {
+        if (page > 1) {
+          setPage(page - 1);
+          // [ dataProducts, isLoadingProducts ] = useProducts(page - 1)
+          // clearFilters()
+        }
+      }
   }
 
   React.useEffect(() => {
@@ -173,7 +170,7 @@ function ProductList() {
                       ? selectedCategoryStyle
                       : defaultCategoryStyle
                   }
-                  key={id.toString()}
+                  key={id}
                   onClick={() => onFilterClick(name)}
                 >
                   {name}
