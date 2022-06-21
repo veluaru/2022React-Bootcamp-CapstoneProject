@@ -110,20 +110,20 @@ function ProductList() {
   }
 
   const clickPages = (type) => {
-      if (type) {
-        if (dataProducts.results.length === 12) {
-          setPage(page + 1);
-        }
-      } else {
-        if (page > 1) {
-          setPage(page - 1);
-        }
+    if (type) {
+      if (dataProducts.results.length === 12) {
+        setPage(page + 1);
       }
+    } else {
+      if (page > 1) {
+        setPage(page - 1);
+      }
+    }
   }
 
   React.useEffect(() => {
     if (category) {
-      setFilterSelected([category])
+      setFilterSelected([category.replace("-", "&").split('_').join(' ')])
     }
   }, [category])
 
@@ -155,7 +155,8 @@ function ProductList() {
             <Spinner />
           ) : (
             <List>
-              {dataCategories.results.map(({ id, data: { name } }) => (
+              {dataCategories.results && 
+              dataCategories.results.map(({ id, data: { name } }) => (
                 <Category
                   style={
                     filterSelected.includes(name)
@@ -191,17 +192,17 @@ function ProductList() {
         </AllProducts>
       </WrapperProductList>
       <Pagination>
-        {!isLoadingProducts &&
+        {!isLoadingProducts && dataProducts.results &&
           <div>
-            <button 
-            onClick={() => clickPages(false)}
-            style={page <= 1 ? {cursor: 'unset'}: {}} 
-            disabled={page <= 1} >&laquo;</button>
+            <button
+              onClick={() => clickPages(false)}
+              style={page <= 1 ? { cursor: 'unset' } : {}}
+              disabled={page <= 1} >&laquo;</button>
             <span>1</span>
-            <button 
-            onClick={() => clickPages(true)}
-            style={dataProducts.results.length < 12 ? {cursor: 'unset'}: {}}
-            disabled={dataProducts.results.length < 12}>&raquo;</button>
+            <button
+              onClick={() => clickPages(true)}
+              style={dataProducts.results.length < 12 ? { cursor: 'unset' } : {}}
+              disabled={dataProducts.results.length < 12}>&raquo;</button>
           </div>
         }
       </Pagination>

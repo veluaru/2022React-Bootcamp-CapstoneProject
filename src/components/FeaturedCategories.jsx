@@ -57,7 +57,7 @@ function FeaturedCategories({ categories: results }) {
         {results.map(({ id, data: { main_image, name } }) => (
           <Link
             style={{ textDecoration: 'none' }}
-            to={`/product-list?category=${name}`}
+            to={`/product-list?category=${name.replace("&", "-").split(' ').join('_')}`}
             key={id.toString()}
           >
             <Card>

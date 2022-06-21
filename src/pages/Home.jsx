@@ -26,11 +26,12 @@ function Home() {
 
   return (
     <Wrapper>
-      {isLoading ? <SliderSkeleton /> : <SliderBanners banners={data.results} />}
-      {!isLoadingCategories && (
+      {isLoading && <SliderSkeleton /> }
+      {!isLoading && data.results &&  <SliderBanners banners={data.results} />}
+      {!isLoadingCategories && dataCategories.results && (
         <FeaturedCategories categories={dataCategories.results} />
       )}
-      {!isLoadingFeaturedProducts && (
+      {!isLoadingFeaturedProducts && dataFeaturedProducts.results && (
         <FeaturedProducts products={dataFeaturedProducts.results} />
       )}
       <Link to="/product-list">
