@@ -3,52 +3,45 @@ import { API_BASE_URL } from '../constants'
 import { useLatestAPI } from './useLatestAPI'
 
 export function useProducts(page) {
-  const { ref: apiRef, isLoadingProducts: isApiMetadataLoading } =
-    useLatestAPI()
-  const [products, setProducts] = useState(() => ({
-    dataProducts: {},
-    isLoadingProducts: true,
-  }))
+  const [isLoadingProducts, setIsLoadingProducts] = useState(true);
+  const [dataProducts, setProducts] = useState({});
+  const { ref: apiRef, isLoadingProducts: isApiMetadataLoading } = useLatestAPI();
 
   useEffect(() => {
     if (!apiRef || isApiMetadataLoading) {
-      return () => {}
+      return () => { }
     }
 
     const controller = new AbortController()
 
-    async function getProducts() {
+    async function getAllProducts() {
       try {
-        setProducts({
-          dataProducts: {},
-          isLoadingProducts: true,
-        })
-
+        setIsLoadingProducts(true)
         const response = await fetch(
           `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
             '[[at(document.type, "product")]]'
           )}&lang=en-us&pageSize=12&page=${page}`,
           {
             signal: controller.signal,
-          }
-        )
-        const dataProducts = await response.json()
-        setProducts({ dataProducts, isLoadingProducts: false })
-      } catch (err) {
-        setProducts({
-          dataProducts: {},
-          isLoadingProducts: false,
-        })
-        console.error(err)
+          })
+        const responseJson = await response.json();
+        setProducts(responseJson)
+        setIsLoadingProducts(false)
+      } catch (error) {
+        console.error(error)
+        setProducts({})
+        setIsLoadingProducts(false)
       }
     }
-
-    getProducts()
+    getAllProducts()
 
     return () => {
-      controller.abort()
+      controller.abort();
     }
-  }, [apiRef, isApiMetadataLoading, page])
+  }, [apiRef, isApiMetadataLoading, page]);
 
-  return products
+  return {
+    dataProducts,
+    isLoadingProducts,
+  };
 }

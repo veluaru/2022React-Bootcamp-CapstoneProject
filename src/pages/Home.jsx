@@ -22,8 +22,8 @@ function Home() {
   const { data, isLoading } = useFeaturedBanners()
   const { dataCategories, isLoadingCategories } = useFeaturedCategories()
   const { dataFeaturedProducts, isLoadingFeaturedProducts } =
-    useFeaturedProducts()
-
+    useFeaturedProducts();
+  console.log(dataCategories, isLoadingCategories)
   return (
     <Wrapper>
       {isLoading && <SliderSkeleton /> }
