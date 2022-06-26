@@ -71,7 +71,7 @@ const Icon = styled.div`
 function ProductCard({ product }) {
   return (
     <Card>
-      <Link to={`/product-details/${product.id}`}>
+      <Link to={`/product/${product.id}`}>
         <Image
           src={product.data.mainimage.url}
           alt={product.data.mainimage.alt}

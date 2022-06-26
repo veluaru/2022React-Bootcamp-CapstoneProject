@@ -1,12 +1,12 @@
 import styled from 'styled-components'
 import React from 'react'
-// import dataProducts from '../assetss/mocks/en-us/products.json'
 import Products from '../components/products/Products.jsx'
 import Spinner from '../components/Spinner.jsx'
 import { useLocation } from 'react-router-dom'
-import { useFeaturedCategories } from '../utils/hooks/useFeaturedCategories'
 import { useProducts } from '../utils/hooks/useProducts'
 import { MainButton } from '../components/MainButton'
+import { useSelector } from "react-redux";
+import { selectCategories } from "../redux/slices/categoriesSlice";
 
 const Wrapper = styled.div`
   display: flex;
@@ -90,11 +90,12 @@ function ProductList() {
   const [filteredProducts, setFilteredProducts] = React.useState([])
   const [filterSelected, setFilterSelected] = React.useState([])
   const [page, setPage] = React.useState(1)
-  const { dataCategories, isLoadingCategories } = useFeaturedCategories()
   let { dataProducts, isLoadingProducts } = useProducts(page)
   const { search } = useLocation()
   const searchParams = new URLSearchParams(search)
   const category = searchParams.get('category')
+  const dataCategories = useSelector(selectCategories);
+
 
   const onFilterClick = (category) => {
     if (filterSelected.includes(category)) {
@@ -151,7 +152,7 @@ function ProductList() {
       <WrapperProductList>
         <CategorySidebar>
           <Title>Categories</Title>
-          {isLoadingCategories || isLoadingProducts ? (
+          { isLoadingProducts ? (
             <Spinner />
           ) : (
             <List>

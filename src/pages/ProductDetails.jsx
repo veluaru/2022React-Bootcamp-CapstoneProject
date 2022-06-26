@@ -106,23 +106,23 @@ const CartIcon = styled.img`
   width: 25px;
   height: 25px;
 `
-const Name = styled.span`
+const Name = styled.label`
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 15px;
 `
-const Price = styled.span`
+const Price = styled.label`
   font-size: 24px;
   margin-bottom: 15px;
 `
-const Category = styled.span`
+const Category = styled.label`
   text-transform: capitalize;
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 15px;
   color: orange;
 `
-const Tags = styled.span`
+const Tags = styled.label`
   margin-right: 8px;
   border: 1px solid rgb(90, 222, 231);
   background-color: rgba(144, 238, 245, 0.521);
@@ -137,7 +137,7 @@ const TagsWrapper = styled.span`
   flex-wrap: wrap;
   margin-bottom: 15px;
 `
-const Sku = styled.span`
+const Sku = styled.label`
   font-size: 16px;
   margin-bottom: 15px;
 `
@@ -157,7 +157,7 @@ function ProductDetails() {
         <Wrapper style={{ backgroundColor: 'transparent', alignItems: 'center' }}>
           <Spinner />
         </Wrapper>}
-      {!isLoadingProduct &&
+      {!isLoadingProduct&& dataProduct.results &&
         <Wrapper>
           <div>
             <ColumnImages>
@@ -174,7 +174,7 @@ function ProductDetails() {
                     <Tags key={index}>{tag}</Tags>
                   )}
                 </TagsWrapper>
-                <span>{dataProduct.results[0].data.short_description}</span>
+                <p>{dataProduct.results[0].data.short_description}</p>
                 <AddToCart>
                   <input
                     type="number"

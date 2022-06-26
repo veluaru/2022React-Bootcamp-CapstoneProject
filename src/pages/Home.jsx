@@ -4,10 +4,11 @@ import SliderSkeleton from '../components/skeletons/SliderSkeleton'
 import FeaturedCategories from '../components/FeaturedCategories.jsx'
 import FeaturedProducts from '../components/products/FeaturedProducts'
 import { useFeaturedBanners } from '../utils/hooks/useFeaturedBanners'
-import { useFeaturedCategories } from '../utils/hooks/useFeaturedCategories'
 import { useFeaturedProducts } from '../utils/hooks/useFeaturedProducts'
 import { Link } from 'react-router-dom'
 import { MainButton } from '../components/MainButton'
+import { useSelector } from "react-redux";
+import { selectCategories } from "../redux/slices/categoriesSlice";
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,15 +21,15 @@ const Wrapper = styled.div`
 
 function Home() {
   const { data, isLoading } = useFeaturedBanners()
-  const { dataCategories, isLoadingCategories } = useFeaturedCategories()
   const { dataFeaturedProducts, isLoadingFeaturedProducts } =
     useFeaturedProducts();
-  console.log(dataCategories, isLoadingCategories)
+  const dataCategories = useSelector(selectCategories);
+
   return (
     <Wrapper>
-      {isLoading && <SliderSkeleton /> }
-      {!isLoading && data.results &&  <SliderBanners banners={data.results} />}
-      {!isLoadingCategories && dataCategories.results && (
+      {isLoading && <SliderSkeleton />}
+      {!isLoading && data.results && <SliderBanners banners={data.results} />}
+      {dataCategories.results && (
         <FeaturedCategories categories={dataCategories.results} />
       )}
       {!isLoadingFeaturedProducts && dataFeaturedProducts.results && (
