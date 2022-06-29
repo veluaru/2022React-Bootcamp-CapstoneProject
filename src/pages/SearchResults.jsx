@@ -27,6 +27,7 @@ const AllProducts = styled.div`
   flex: 1;
 `
 const Pagination = styled.div`
+  font-weight: bold;
   button {
     font-size: 16px;
     font-weight: bold;
@@ -34,7 +35,7 @@ const Pagination = styled.div`
     background-color: rgb(227, 230, 230);
     border-radius: 5px;
     color: black;
-    margin 5px;
+    margin: 5px 20px;
     padding: 6px 12px;
     cursor: pointer;
   }
@@ -57,15 +58,15 @@ function ProductList() {
   const { dataSearchTerm, isLoadingSearchTerm } = useSearchTerm(searchTerm, page)
 
   const clickPages = (type) => {
-      if (type) {
-        if (dataSearchTerm.results.length === 20) {
-          setPage(page + 1);
-        }
-      } else {
-        if (page > 1) {
-          setPage(page - 1);
-        }
+    if (type) {
+      if (dataSearchTerm.results.length === 20) {
+        setPage(page + 1);
       }
+    } else {
+      if (page > 1) {
+        setPage(page - 1);
+      }
+    }
   }
 
   return (
@@ -90,15 +91,15 @@ function ProductList() {
       <Pagination>
         {!isLoadingSearchTerm &&
           <div>
-            <button 
-            onClick={() => clickPages(false)}
-            style={page <= 1 ? {cursor: 'unset'}: {}} 
-            disabled={page <= 1} >&laquo;</button>
-            <span>1</span>
-            <button 
-            onClick={() => clickPages(true)}
-            style={dataSearchTerm.results.length < 20 ? {cursor: 'unset'}: {}}
-            disabled={dataSearchTerm.results.length < 20}>&raquo;</button>
+            <button
+              onClick={() => clickPages(false)}
+              style={page <= 1 ? { cursor: 'unset' } : {}}
+              disabled={page <= 1} >&laquo;</button>
+            <span>{page}</span>
+            <button
+              onClick={() => clickPages(true)}
+              style={dataSearchTerm.results.length < 20 ? { cursor: 'unset' } : {}}
+              disabled={dataSearchTerm.results.length < 20}>&raquo;</button>
           </div>
         }
       </Pagination>

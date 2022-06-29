@@ -152,24 +152,24 @@ function ProductList() {
       <WrapperProductList>
         <CategorySidebar>
           <Title>Categories</Title>
-          { isLoadingProducts ? (
+          {isLoadingProducts ? (
             <Spinner />
           ) : (
             <List>
-              {dataCategories.results && 
-              dataCategories.results.map(({ id, data: { name } }) => (
-                <Category
-                  style={
-                    filterSelected.includes(name)
-                      ? selectedCategoryStyle
-                      : defaultCategoryStyle
-                  }
-                  key={id}
-                  onClick={() => onFilterClick(name)}
-                >
-                  {name}
-                </Category>
-              ))}
+              {dataCategories.results &&
+                dataCategories.results.map(({ id, data: { name } }) => (
+                  <Category
+                    style={
+                      filterSelected.includes(name)
+                        ? selectedCategoryStyle
+                        : defaultCategoryStyle
+                    }
+                    key={id}
+                    onClick={() => onFilterClick(name)}
+                  >
+                    {name}
+                  </Category>
+                ))}
               {filterSelected.length > 0 && (
                 <MainButton onClick={clearFilters}>Clear</MainButton>
               )}
@@ -199,7 +199,7 @@ function ProductList() {
               onClick={() => clickPages(false)}
               style={page <= 1 ? { cursor: 'unset' } : {}}
               disabled={page <= 1} >&laquo;</button>
-            <span>1</span>
+            <span>{page}</span>
             <button
               onClick={() => clickPages(true)}
               style={dataProducts.results.length < 12 ? { cursor: 'unset' } : {}}
