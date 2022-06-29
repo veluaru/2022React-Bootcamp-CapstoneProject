@@ -5,8 +5,9 @@ import Spinner from '../components/Spinner.jsx'
 import { useLocation } from 'react-router-dom'
 import { useProducts } from '../utils/hooks/useProducts'
 import { MainButton } from '../components/MainButton'
-import { useSelector } from "react-redux";
-import { selectCategories } from "../redux/slices/categoriesSlice";
+import { useSelector } from "react-redux"
+import { selectCategories } from "../redux/slices/categoriesSlice"
+import { routeSpacesAndAmpersantEncode } from '../utils/stringUtils'
 
 const Wrapper = styled.div`
   display: flex;
@@ -125,7 +126,7 @@ function ProductList() {
 
   React.useEffect(() => {
     if (category) {
-      setFilterSelected([category.replace("-", "&").split('_').join(' ')])
+      setFilterSelected([routeSpacesAndAmpersantEncode(category)])
     }
   }, [category])
 

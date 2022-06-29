@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { routeSpacesAndAmpersantDecode } from '../utils/stringUtils'
 
 const Wrapper = styled.div`
   display: flex;
@@ -57,7 +58,7 @@ function FeaturedCategories({ categories: results }) {
         {results.map(({ id, data: { main_image, name } }) => (
           <Link
             style={{ textDecoration: 'none' }}
-            to={`/product-list?category=${name.replace("&", "-").split(' ').join('_')}`}
+            to={`/product-list?category=${routeSpacesAndAmpersantDecode(name)}`}
             key={id.toString()}
           >
             <Card>
