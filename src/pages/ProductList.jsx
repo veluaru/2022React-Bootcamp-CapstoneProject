@@ -90,6 +90,7 @@ function ProductList() {
   const [filteredProducts, setFilteredProducts] = React.useState([])
   const [filterSelected, setFilterSelected] = React.useState([])
   const [page, setPage] = React.useState(1)
+  const [emptyProducts, setEmptyProducts] = React.useState(false)
   let { dataProducts, isLoadingProducts } = useProducts(page)
   const { search } = useLocation()
   const searchParams = new URLSearchParams(search)
@@ -129,7 +130,12 @@ function ProductList() {
   }, [category])
 
   React.useEffect(() => {
+    if(dataProducts.results && dataProducts.results === 0){
+      setEmptyProducts(true);
+      return
+    }
     setFilteredProducts(dataProducts.results || [])
+    setEmptyProducts(false);
   }, [dataProducts])
 
   React.useEffect(() => {
@@ -202,8 +208,8 @@ function ProductList() {
             <span>{page}</span>
             <button
               onClick={() => clickPages(true)}
-              style={dataProducts.results.length < 12 ? { cursor: 'unset' } : {}}
-              disabled={dataProducts.results.length < 12}>&raquo;</button>
+              style={filteredProducts.length < 12 || emptyProducts ? { cursor: 'unset' } : {}}
+              disabled={filteredProducts.length < 12 || emptyProducts}>&raquo;</button>
           </div>
         }
       </Pagination>

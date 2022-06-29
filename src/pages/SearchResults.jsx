@@ -56,10 +56,12 @@ function ProductList() {
   const searchParams = new URLSearchParams(search)
   const searchTerm = searchParams.get('q')
   const { dataSearchTerm, isLoadingSearchTerm } = useSearchTerm(searchTerm, page)
+  const [filteredSearchTerm, setFilteredSearchTerm] = React.useState([])
+  const [emptyProducts, setEmptyProducts] = React.useState(false)
 
   const clickPages = (type) => {
     if (type) {
-      if (dataSearchTerm.results.length === 20) {
+      if (dataSearchTerm.results.length === 5) {
         setPage(page + 1);
       }
     } else {
@@ -68,28 +70,42 @@ function ProductList() {
       }
     }
   }
+  React.useEffect(() => {
+    if (dataSearchTerm.results && dataSearchTerm.results === 0) {
+      setEmptyProducts(true);
+      return
+    }
+    setFilteredSearchTerm(dataSearchTerm.results || [])
+    setEmptyProducts(false);
+  }, [dataSearchTerm])
 
   return (
     <Wrapper>
       <WrapperProductList>
         <AllProducts
           style={
-            !isLoadingSearchTerm && dataSearchTerm.results.length > 0
+            !isLoadingSearchTerm &&
+            dataSearchTerm.results &&
+            dataSearchTerm.results.length > 0
               ? productsLoaded
               : {}
           }
         >
           {isLoadingSearchTerm && <Spinner />}
-          {!isLoadingSearchTerm && dataSearchTerm.results.length > 0 && (
-            <Products products={dataSearchTerm.results} />
+          {!isLoadingSearchTerm &&
+          dataSearchTerm.results &&
+          dataSearchTerm.results.length > 0 && (
+            <Products products={filteredSearchTerm} />
           )}
-          {!isLoadingSearchTerm && dataSearchTerm.results.length === 0 && (
+          {!isLoadingSearchTerm && 
+          dataSearchTerm.results && 
+          dataSearchTerm.results.length === 0 && (
             <Empty>There are no matching products :c</Empty>
           )}
         </AllProducts>
       </WrapperProductList>
       <Pagination>
-        {!isLoadingSearchTerm &&
+        {!isLoadingSearchTerm && dataSearchTerm.results &&
           <div>
             <button
               onClick={() => clickPages(false)}
@@ -98,8 +114,8 @@ function ProductList() {
             <span>{page}</span>
             <button
               onClick={() => clickPages(true)}
-              style={dataSearchTerm.results.length < 20 ? { cursor: 'unset' } : {}}
-              disabled={dataSearchTerm.results.length < 20}>&raquo;</button>
+              style={filteredSearchTerm.length < 5 || emptyProducts ? { cursor: 'unset' } : {}}
+              disabled={filteredSearchTerm.length < 5 || emptyProducts}>&raquo;</button>
           </div>
         }
       </Pagination>

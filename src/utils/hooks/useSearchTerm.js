@@ -22,7 +22,7 @@ export function useSearchTerm(term, page) {
             '[[at(document.type, "product")]]'
           )}&q=${encodeURIComponent(
             '[[fulltext(document, "' + term + '")]]'
-          )}&lang=en-us&pageSize=20&page=${page}`,
+          )}&lang=en-us&pageSize=5&page=${page}`,
           {
             signal: controller.signal,
           })
