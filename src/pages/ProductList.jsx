@@ -1,9 +1,13 @@
 import styled from 'styled-components'
 import React from 'react'
-import dataCategories from '../assetss/mocks/en-us/product-categories.json'
-import dataProducts from '../assetss/mocks/en-us/products.json'
-import Products from '../components/Products.jsx'
+import Products from '../components/products/Products.jsx'
 import Spinner from '../components/Spinner.jsx'
+import { useLocation } from 'react-router-dom'
+import { useProducts } from '../utils/hooks/useProducts'
+import { MainButton } from '../components/MainButton'
+import { useSelector } from "react-redux"
+import { selectCategories } from "../redux/slices/categoriesSlice"
+import { routeSpacesAndAmpersantEncode } from '../utils/stringUtils'
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,14 +27,13 @@ const CategorySidebar = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  margin-right: 10px;
+  margin-right: 15px;
 `
 const Category = styled.div`
-  max-width: 160px;
-  width: 100%;
   padding: 10px 5px;
   cursor: pointer;
   border-bottom: 1px solid rgb(207, 207, 207);
+  padding-right: 10px;
 `
 const List = styled.div`
   display: flex;
@@ -52,6 +55,7 @@ const AllProducts = styled.div`
   flex: 1;
 `
 const Pagination = styled.div`
+  font-weight: bold;
   button {
     font-size: 16px;
     font-weight: bold;
@@ -59,7 +63,7 @@ const Pagination = styled.div`
     background-color: rgb(227, 230, 230);
     border-radius: 5px;
     color: black;
-    margin 5px;
+    margin: 5px 20px;
     padding: 6px 12px;
     cursor: pointer;
   }
@@ -78,97 +82,137 @@ const defaultCategoryStyle = {
   color: 'black',
   backgroundColor: 'white',
 }
-const activePagingStyle = {
-  border: '1px solid rgb(171, 240, 245)',
-  backgroundColor: 'rgb(171, 240, 245)',
-  cursor: 'auto',
-}
 const productsLoaded = {
   backgroundColor: 'rgba(255, 233, 219, 0.637)',
   borderRadius: '10px',
 }
 
 function ProductList() {
-  const [filteredProducts, setFilteredProducts] = React.useState(
-    dataProducts.results
-  )
+  const [filteredProducts, setFilteredProducts] = React.useState([])
   const [filterSelected, setFilterSelected] = React.useState([])
-  const [dataLoaded, setDataLoaded] = React.useState(false)
+  const [page, setPage] = React.useState(1)
+  const [emptyProducts, setEmptyProducts] = React.useState(false)
+  let { dataProducts, isLoadingProducts } = useProducts(page)
+  const { search } = useLocation()
+  const searchParams = new URLSearchParams(search)
+  const category = searchParams.get('category')
+  const dataCategories = useSelector(selectCategories);
+
 
   const onFilterClick = (category) => {
     if (filterSelected.includes(category)) {
-      setFilterSelected((array) => array.filter((prevCategory) => prevCategory !== category))
+      setFilterSelected((array) =>
+        array.filter((prevCategory) => prevCategory !== category)
+      )
     } else {
       setFilterSelected([...filterSelected, category])
     }
   }
+  const clearFilters = () => {
+    setFilterSelected([])
+  }
+
+  const clickPages = (type) => {
+    if (type) {
+      if (dataProducts.results.length === 12) {
+        setPage(page + 1);
+      }
+    } else {
+      if (page > 1) {
+        setPage(page - 1);
+      }
+    }
+  }
 
   React.useEffect(() => {
-    const timer = setTimeout(() => {
-      setDataLoaded(true)
-    }, 2000)
-    return () => clearTimeout(timer)
-  }, [])
-
+    if (category) {
+      setFilterSelected([routeSpacesAndAmpersantEncode(category)])
+    }
+  }, [category])
 
   React.useEffect(() => {
-    let defaultArray = dataProducts.results
-    let newFilterArray = defaultArray.filter((product) => {
-      let categoryString = product.data.category.slug.replace(/\w\S*/g, (w) =>
-        w.replace(/^\w/, (c) => c.toUpperCase())
-      )
-      return filterSelected.includes(categoryString) || filterSelected.length === 0
-    })
-    setFilteredProducts(newFilterArray)
+    if(dataProducts.results && dataProducts.results === 0){
+      setEmptyProducts(true);
+      return
+    }
+    setFilteredProducts(dataProducts.results || [])
+    setEmptyProducts(false);
+  }, [dataProducts])
 
-  }, [filterSelected])
+  React.useEffect(() => {
+    if (dataProducts.results) {
+      let defaultArray = dataProducts.results
+      let newFilterArray = defaultArray.filter((product) => {
+        let categoryString = product.data.category.slug.replace(/\w\S*/g, (w) =>
+          w.replace(/^\w/, (c) => c.toUpperCase())
+        )
+        return (
+          filterSelected.includes(categoryString) || filterSelected.length === 0
+        )
+      })
+      setFilteredProducts(newFilterArray)
+    }
+  }, [filterSelected, dataProducts])
 
   return (
     <Wrapper>
       <WrapperProductList>
         <CategorySidebar>
           <Title>Categories</Title>
-          <List>
-            {dataCategories.results.map(({ id, data: { name } }) => (
-              <Category
-                style={
-                  filterSelected.includes(name)
-                    ? selectedCategoryStyle
-                    : defaultCategoryStyle
-                }
-                key={id.toString()}
-                onClick={() => onFilterClick(name)}
-              >
-                {name}
-              </Category>
-            ))}
-          </List>
+          {isLoadingProducts ? (
+            <Spinner />
+          ) : (
+            <List>
+              {dataCategories.results &&
+                dataCategories.results.map(({ id, data: { name } }) => (
+                  <Category
+                    style={
+                      filterSelected.includes(name)
+                        ? selectedCategoryStyle
+                        : defaultCategoryStyle
+                    }
+                    key={id}
+                    onClick={() => onFilterClick(name)}
+                  >
+                    {name}
+                  </Category>
+                ))}
+              {filterSelected.length > 0 && (
+                <MainButton onClick={clearFilters}>Clear</MainButton>
+              )}
+            </List>
+          )}
         </CategorySidebar>
         <AllProducts
           style={
-            dataLoaded && filteredProducts.length > 0 ? productsLoaded : {}
+            !isLoadingProducts && filteredProducts.length > 0
+              ? productsLoaded
+              : {}
           }
         >
-          {!dataLoaded && <Spinner />}
-          {dataLoaded && filteredProducts.length > 0 && (
+          {isLoadingProducts && <Spinner />}
+          {!isLoadingProducts && filteredProducts.length > 0 && (
             <Products products={filteredProducts} />
           )}
-          {dataLoaded && filteredProducts.length === 0 && (
+          {!isLoadingProducts && filteredProducts.length === 0 && (
             <Empty>There are no products :c</Empty>
           )}
         </AllProducts>
       </WrapperProductList>
       <Pagination>
-        <div>
-          <button>&laquo;</button>
-          <button style={activePagingStyle}>1</button>
-          <button>2</button>
-          <button>3</button>
-          <button>4</button>
-          <button>5</button>
-          <button>6</button>
-          <button>&raquo;</button>
-        </div>
+        {!isLoadingProducts && dataProducts.results &&
+          <div>
+            <button
+              onClick={() => clickPages(false)}
+              style={page <= 1 ? { cursor: 'unset' } : {}}
+              disabled={page <= 1} >&laquo;</button>
+            <span>{page}</span>
+            <button
+              onClick={() => clickPages(true)}
+              style={filteredProducts.length < 12 || emptyProducts ? { cursor: 'unset' } : {}}
+              disabled={filteredProducts.length < 12 || emptyProducts}>&raquo;</button>
+          </div>
+        }
       </Pagination>
     </Wrapper>
   )

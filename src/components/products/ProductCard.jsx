@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import cartPlusIcon from '../assetss/images/cart-plus.png'
+import cartPlusIcon from '../../assetss/images/cart-plus.png'
+import { Link } from 'react-router-dom'
 
 const Card = styled.div`
   position: relative;
@@ -12,7 +13,6 @@ const Card = styled.div`
   width: 100%;
   max-width: 200px;
   margin: 2% 1%;
-  cursor: pointer;
   background-color: white;
   :hover {
       box-shadow: 0px 0px 5px 1px rgba(110,110,110,0.53);
@@ -25,6 +25,7 @@ const Image = styled.img`
   object-fit: cover;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
+  cursor: pointer;
 `
 const Name = styled.span`
   font-size: 16px;
@@ -41,6 +42,7 @@ const Category = styled.span`
   width: min-content;
   padding: 2px 7px;
   font-size: 14px;
+  width: max-content;
 `
 const Price = styled.span`
   color: orange;
@@ -59,6 +61,7 @@ const Icon = styled.div`
   bottom: 0;
   right: 0;
   margin: 0 11px 11px 0;
+  cursor: pointer;
   img {
     width: 25px;
     height: 25px;
@@ -68,10 +71,12 @@ const Icon = styled.div`
 function ProductCard({ product }) {
   return (
     <Card>
-      <Image
-        src={product.data.mainimage.url}
-        alt={product.data.mainimage.alt}
-      />
+      <Link to={`/product/${product.id}`}>
+        <Image
+          src={product.data.mainimage.url}
+          alt={product.data.mainimage.alt}
+        />
+      </Link>
       <Wrapper>
         <Name>{product.data.name}</Name>
         <Category>{product.data.category.slug}</Category>

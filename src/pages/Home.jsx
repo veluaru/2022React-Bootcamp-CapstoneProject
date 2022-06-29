@@ -1,10 +1,14 @@
 import styled from 'styled-components'
-import dataBanners from '../assetss/mocks/en-us/featured-banners.json'
-import dataCategories from '../assetss/mocks/en-us/product-categories.json'
-import dataProducts from '../assetss/mocks/en-us/featured-products.json'
-import Slider from '../components/Slider.jsx'
-import Categories from '../components/Categories.jsx'
-import FeaturedProducts from '../components/FeaturedProducts'
+import SliderBanners from '../components/SliderBanners.jsx'
+import SliderSkeleton from '../components/skeletons/SliderSkeleton'
+import FeaturedCategories from '../components/FeaturedCategories.jsx'
+import FeaturedProducts from '../components/products/FeaturedProducts'
+import { useFeaturedBanners } from '../utils/hooks/useFeaturedBanners'
+import { useFeaturedProducts } from '../utils/hooks/useFeaturedProducts'
+import { Link } from 'react-router-dom'
+import { MainButton } from '../components/MainButton'
+import { useSelector } from "react-redux";
+import { selectCategories } from "../redux/slices/categoriesSlice";
 
 const Wrapper = styled.div`
   display: flex;
@@ -12,29 +16,28 @@ const Wrapper = styled.div`
   align-items: center;
   height: 100%;
   margin-bottom: 40px;
-  padding: 0 3%;
-`
-const Button = styled.button`
-  font-size: 20px;
-  font-family: 'Arista-Light';
-  color: white;
-  border: 1px solid rgb(90, 222, 231);
-  border-radius: 10px;
-  background-color: rgb(90, 222, 231);
-  width: 100%;
-  max-width: 200px;
-  margin-top: 15px;
-  padding: 10px 5px;
-  cursor: pointer;
+  padding: 0 40px;
 `
 
-function Home({ setView }) {
+function Home() {
+  const { data, isLoading } = useFeaturedBanners()
+  const { dataFeaturedProducts, isLoadingFeaturedProducts } =
+    useFeaturedProducts();
+  const dataCategories = useSelector(selectCategories);
+
   return (
     <Wrapper>
-      <Slider banners={dataBanners.results} />
-      <Categories categories={dataCategories.results} />
-      <FeaturedProducts products={dataProducts.results} />
-      <Button onClick={() => setView('ProductList')}>View all products</Button>
+      {isLoading && <SliderSkeleton />}
+      {!isLoading && data.results && <SliderBanners banners={data.results} />}
+      {dataCategories.results && (
+        <FeaturedCategories categories={dataCategories.results} />
+      )}
+      {!isLoadingFeaturedProducts && dataFeaturedProducts.results && (
+        <FeaturedProducts products={dataFeaturedProducts.results} />
+      )}
+      <Link to="/product-list">
+        <MainButton>View all products</MainButton>
+      </Link>
     </Wrapper>
   )
 }

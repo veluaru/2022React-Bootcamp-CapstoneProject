@@ -2,27 +2,50 @@ import './App.css'
 import React from 'react'
 import Home from './pages/Home.jsx'
 import ProductList from './pages/ProductList.jsx'
-import Header from './components/Header.jsx'
+import ProductDetails from './pages/ProductDetails.jsx'
+import Header from './components/header/Header.jsx'
 import Footer from './components/Footer.jsx'
+import SearchResults from './pages/SearchResults.jsx'
+import { Routes, Route } from 'react-router-dom'
+import Spinner from './components/Spinner.jsx'
+import { useFeaturedCategories } from './utils/hooks/useFeaturedCategories'
+import { useDispatch } from "react-redux";
+import { setCategories } from "./redux/slices/categoriesSlice";
 
 function App() {
-  const [viewEngine, setViewEngine] = React.useState('Home')
+  const { dataCategories, isLoadingCategories } = useFeaturedCategories()
+  const dispatch = useDispatch();
 
-  const switchEngine = (engine) => {
-    setViewEngine(engine)
-  }
-
-  const renderMap = {
-    Home: <Home setView={switchEngine} />,
-    ProductList: <ProductList setView={switchEngine} />,
-  }
+  React.useEffect(() => {
+    dispatch(setCategories(dataCategories));
+  }, [dataCategories, dispatch]);
+  
 
   return (
-    <div className="app">
-      <Header setView={switchEngine} />
-      <div className="app-content">{renderMap[viewEngine]}</div>
-      <Footer />
-    </div>
+    <>
+      {isLoadingCategories && <Spinner />}
+      {!isLoadingCategories && <div className="app">
+        <Header />
+        <div className="app-content">
+          <Routes>
+            <Route path="/*" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/product-list">
+              <Route path="?category" element={<ProductList />} />
+              <Route path="" element={<ProductList />} />
+            </Route>
+            <Route path="/search">
+              <Route path="?q" element={<SearchResults />} />
+              <Route path="" element={<SearchResults />} />
+            </Route>
+            <Route path="/product/:id" element={<ProductDetails />} />
+          </Routes>
+        </div>
+        <Footer />
+      </div>
+      }
+    </>
+
   )
 }
 

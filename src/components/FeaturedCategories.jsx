@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+import { routeSpacesAndAmpersantDecode } from '../utils/stringUtils'
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,7 +18,7 @@ const Card = styled.div`
   border-radius: 10px;
   height: 40px;
   max-width: 180px;
-  margin: 1%;
+  margin: 5px 10px;
   padding: 5px 20px 5px 0;
   cursor: pointer;
   :hover {
@@ -43,21 +45,31 @@ const Image = styled.img`
   border-top-left-radius: 10px;
   margin-right: 15px;
 `
+const Name = styled.p`
+  font-size: 14px;
+  color: black;
+`
 
-function Categories({ categories: results }) {
+function FeaturedCategories({ categories: results }) {
   return (
     <Wrapper>
       <Title>Categories</Title>
       <CardList>
         {results.map(({ id, data: { main_image, name } }) => (
-          <Card key={id.toString()}>
-            <Image src={main_image.url} alt={main_image.alt} />
-            {name}
-          </Card>
+          <Link
+            style={{ textDecoration: 'none' }}
+            to={`/product-list?category=${routeSpacesAndAmpersantDecode(name)}`}
+            key={id.toString()}
+          >
+            <Card>
+              <Image src={main_image.url} alt={main_image.alt} />
+              <Name>{name}</Name>
+            </Card>
+          </Link>
         ))}
       </CardList>
     </Wrapper>
   )
 }
 
-export default Categories
+export default FeaturedCategories
