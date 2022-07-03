@@ -50,12 +50,6 @@ const CartTotal = styled.div`
     cursor: pointer;
   }
 `
-// const QuantityInput = styled.input`
-// border: 1px solid orange;
-// border-radius: 5px;
-// width: 40px;
-// margin-right: 15px;
-// `
 
 function Cart() {
   const dataProductsCart = useSelector(selectProductsCart)

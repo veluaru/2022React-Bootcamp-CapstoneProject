@@ -28,14 +28,10 @@ const CartNumber = styled.span`
 
 function AddToCart() {
   const dataQuantityProductsCart = useSelector(selectCartQuantity)
-  const onClickCart = () => {
-    console.log('Cart clicked!')
-  }
-
   return (
     <WrapperCart>
       <Link to={`/cart`}>
-        <Icon onClick={onClickCart} src={cartIcon} alt="Cart Icon" />
+        <Icon src={cartIcon} alt="Cart Icon" />
       </Link>
       <CartNumber>{dataQuantityProductsCart}</CartNumber>
     </WrapperCart>
