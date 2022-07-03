@@ -3,13 +3,15 @@ import { API_BASE_URL } from '../constants'
 import { useLatestAPI } from './useLatestAPI'
 
 export function useFeaturedProducts() {
-  const [isLoadingFeaturedProducts, setIsLoadingFeaturedProducts] = useState(true);
-  const [dataFeaturedProducts, setFeaturedProducts] = useState({});
-  const { ref: apiRef, isLoadingFeaturedProducts: isApiMetadataLoading } = useLatestAPI();
+  const [isLoadingFeaturedProducts, setIsLoadingFeaturedProducts] =
+    useState(true)
+  const [dataFeaturedProducts, setFeaturedProducts] = useState({})
+  const { ref: apiRef, isLoadingFeaturedProducts: isApiMetadataLoading } =
+    useLatestAPI()
 
   useEffect(() => {
     if (!apiRef || isApiMetadataLoading) {
-      return () => { }
+      return () => {}
     }
 
     const controller = new AbortController()
@@ -25,8 +27,9 @@ export function useFeaturedProducts() {
           )}&lang=en-us&pageSize=16`,
           {
             signal: controller.signal,
-          })
-        const responseJson = await response.json();
+          }
+        )
+        const responseJson = await response.json()
         setFeaturedProducts(responseJson)
         setIsLoadingFeaturedProducts(false)
       } catch (error) {
@@ -38,13 +41,12 @@ export function useFeaturedProducts() {
     getAllFeaturedProducts()
 
     return () => {
-      controller.abort();
+      controller.abort()
     }
-  }, [apiRef, isApiMetadataLoading]);
+  }, [apiRef, isApiMetadataLoading])
 
   return {
     dataFeaturedProducts,
     isLoadingFeaturedProducts,
-  };
+  }
 }
-

@@ -7,7 +7,7 @@ const WrapperSlider = styled.div`
   height: fit-content;
   max-width: 500px;
   width: 100%;
-  box-shadow: 0px 0px 10px -3px rgba(110,110,110,0.53);
+  box-shadow: 0px 0px 10px -3px rgba(110, 110, 110, 0.53);
   border-radius: 10px;
 `
 const Image = styled.img`
@@ -20,17 +20,13 @@ const Image = styled.img`
 function SliderProduct({ images }) {
   return (
     <WrapperSlider>
-      <Carousel
-        infiniteLoop={true}
-        showThumbs={false}
-        showStatus={false}
-      >
+      <Carousel infiniteLoop={true} showThumbs={false} showStatus={false}>
         {images.map((image, index) => (
           <Image
             style={{ borderRadius: '10px' }}
             key={index}
             src={image.image.url}
-            alt='Product'
+            alt="Product"
           />
         ))}
       </Carousel>

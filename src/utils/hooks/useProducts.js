@@ -3,13 +3,14 @@ import { API_BASE_URL } from '../constants'
 import { useLatestAPI } from './useLatestAPI'
 
 export function useProducts(page) {
-  const [isLoadingProducts, setIsLoadingProducts] = useState(true);
-  const [dataProducts, setProducts] = useState({});
-  const { ref: apiRef, isLoadingProducts: isApiMetadataLoading } = useLatestAPI();
+  const [isLoadingProducts, setIsLoadingProducts] = useState(true)
+  const [dataProducts, setProducts] = useState({})
+  const { ref: apiRef, isLoadingProducts: isApiMetadataLoading } =
+    useLatestAPI()
 
   useEffect(() => {
     if (!apiRef || isApiMetadataLoading) {
-      return () => { }
+      return () => {}
     }
 
     const controller = new AbortController()
@@ -23,8 +24,9 @@ export function useProducts(page) {
           )}&lang=en-us&pageSize=12&page=${page}`,
           {
             signal: controller.signal,
-          })
-        const responseJson = await response.json();
+          }
+        )
+        const responseJson = await response.json()
         setProducts(responseJson)
         setIsLoadingProducts(false)
       } catch (error) {
@@ -36,12 +38,12 @@ export function useProducts(page) {
     getAllProducts()
 
     return () => {
-      controller.abort();
+      controller.abort()
     }
-  }, [apiRef, isApiMetadataLoading, page]);
+  }, [apiRef, isApiMetadataLoading, page])
 
   return {
     dataProducts,
     isLoadingProducts,
-  };
+  }
 }

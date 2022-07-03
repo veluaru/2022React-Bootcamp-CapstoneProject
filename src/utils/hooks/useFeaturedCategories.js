@@ -3,13 +3,14 @@ import { API_BASE_URL } from '../constants'
 import { useLatestAPI } from './useLatestAPI'
 
 export function useFeaturedCategories() {
-  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
-  const [dataCategories, setCategories] = useState({});
-  const { ref: apiRef, isLoadingCategories: isApiMetadataLoading } = useLatestAPI();
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true)
+  const [dataCategories, setCategories] = useState({})
+  const { ref: apiRef, isLoadingCategories: isApiMetadataLoading } =
+    useLatestAPI()
 
   useEffect(() => {
     if (!apiRef || isApiMetadataLoading) {
-      return () => { }
+      return () => {}
     }
 
     const controller = new AbortController()
@@ -23,8 +24,9 @@ export function useFeaturedCategories() {
           )}&lang=en-us&pageSize=30`,
           {
             signal: controller.signal,
-          })
-        const responseJson = await response.json();
+          }
+        )
+        const responseJson = await response.json()
         setCategories(responseJson)
         setIsLoadingCategories(false)
       } catch (error) {
@@ -36,12 +38,12 @@ export function useFeaturedCategories() {
     getAllFeaturedCategories()
 
     return () => {
-      controller.abort();
+      controller.abort()
     }
-  }, [apiRef, isApiMetadataLoading]);
+  }, [apiRef, isApiMetadataLoading])
 
   return {
     dataCategories,
     isLoadingCategories,
-  };
+  }
 }

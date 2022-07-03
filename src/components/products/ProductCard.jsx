@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import cartPlusIcon from '../../assetss/images/cart-plus.png'
 import { Link } from 'react-router-dom'
-import { useDispatch } from "react-redux";
-import { addProduct } from "../../redux/slices/productsCartSlice";
+import { useDispatch } from 'react-redux'
+import { addProduct } from '../../redux/slices/productsCartSlice'
 
 const Card = styled.div`
   position: relative;
@@ -80,13 +80,13 @@ const NoStock = styled.span`
 `
 
 function ProductCard({ product }) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const addToCart = () => {
     const newProduct = {
       quantity: 1,
       product: product,
     }
-    dispatch(addProduct(newProduct));
+    dispatch(addProduct(newProduct))
   }
 
   return (
@@ -102,13 +102,13 @@ function ProductCard({ product }) {
         <Category>{product.data.category.slug}</Category>
         <Price>${product.data.price}</Price>
       </Wrapper>
-      {product.data.stock > 0 ?
+      {product.data.stock > 0 ? (
         <Icon onClick={addToCart}>
           <img src={cartPlusIcon} alt="Cart Plus Icon" />
         </Icon>
-        : <NoStock>Out of stock</NoStock>
-      }
-
+      ) : (
+        <NoStock>Out of stock</NoStock>
+      )}
     </Card>
   )
 }

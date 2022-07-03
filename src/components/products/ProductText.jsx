@@ -36,7 +36,6 @@ const Sku = styled.label`
   margin-bottom: 15px;
 `
 
-
 function ProductText({ dataProduct }) {
   return (
     <>
@@ -45,9 +44,9 @@ function ProductText({ dataProduct }) {
       <Sku>SKU: {dataProduct.data.sku}</Sku>
       <Category>Category: {dataProduct.data.category.slug}</Category>
       <TagsWrapper>
-        {dataProduct.tags.map((tag, index) =>
+        {dataProduct.tags.map((tag, index) => (
           <Tags key={index}>{tag}</Tags>
-        )}
+        ))}
       </TagsWrapper>
       <p>{dataProduct.data.short_description}</p>
     </>

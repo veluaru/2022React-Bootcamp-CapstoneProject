@@ -5,9 +5,7 @@ import AddToCart from './AddToCart.jsx'
 import SearchBar from './SearchBar.jsx'
 import { Link } from 'react-router-dom'
 
-
 function Header() {
-
   return (
     <div className="header">
       <Link className="header__left-side" to="/home">

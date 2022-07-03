@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import cartPlusIcon from '../../assetss/images/cart-plus.png'
-import { useDispatch } from "react-redux";
-import { addProduct } from "../../redux/slices/productsCartSlice";
+import { useDispatch } from 'react-redux'
+import { addProduct } from '../../redux/slices/productsCartSlice'
 
 const AddToCartColumn = styled.span`
   display: flex;
@@ -25,7 +25,7 @@ const CartIcon = styled.img`
 
 function AddToCartInput({ product }) {
   const [numberAddToCart, setNumberAddToCart] = React.useState(1)
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const onChangeAddCartNumber = (event) => {
     if (event.target.value <= product.data.stock) {
@@ -40,7 +40,7 @@ function AddToCartInput({ product }) {
           quantity: numberAddToCart,
           product: product,
         }
-        dispatch(addProduct(newProduct));
+        dispatch(addProduct(newProduct))
       }
     }
   }
@@ -51,7 +51,8 @@ function AddToCartInput({ product }) {
         type="number"
         value={numberAddToCart}
         min="1"
-        onChange={onChangeAddCartNumber} />
+        onChange={onChangeAddCartNumber}
+      />
       <CartIcon onClick={addToCart} src={cartPlusIcon} alt="Cart Plus Icon" />
     </AddToCartColumn>
   )

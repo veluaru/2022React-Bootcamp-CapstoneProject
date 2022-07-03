@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { useDispatch } from "react-redux";
-import { removeProduct } from "../../redux/slices/productsCartSlice";
+import { useDispatch } from 'react-redux'
+import { removeProduct, addProduct } from '../../redux/slices/productsCartSlice'
 
 const Wrapper = styled.div`
   display: flex;
@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
   width: 100%;
   margin-bottom: 20px;
-  @media (max-width:600px) {
+  @media (max-width: 600px) {
     width: unset;
     display: flex;
     flex-direction: column;
@@ -41,7 +41,7 @@ const WrapperImage = styled.div`
     object-fit: cover;
     border-radius: 10px;
   }
-  @media (max-width:600px) {
+  @media (max-width: 600px) {
     width: 100%;
     justify-content: flex-start;
   }
@@ -50,7 +50,7 @@ const WrapperText = styled.div`
   width: 40%;
   display: flex;
   flex-direction: column;
-  @media (max-width:600px) {
+  @media (max-width: 600px) {
     width: 100%;
   }
 `
@@ -67,20 +67,36 @@ const RemoveProduct = styled.div`
     padding: 5px 8px;
     cursor: pointer;
   }
-  @media (max-width:600px) {
+  @media (max-width: 600px) {
     width: 100%;
     justify-content: left;
   }
 `
 function CartProduct(props) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const removeAProduct = () => {
     const deleteProduct = {
       quantity: props.product.quantity,
       product: props.product.product,
     }
-    dispatch(removeProduct(deleteProduct));
+    dispatch(removeProduct(deleteProduct))
+  }
+
+  const clickQuantity = (type) => {
+    if (type === 'more') {
+      const newProduct = {
+        quantity: 1,
+        product: props.product.product,
+      }
+      addProduct(newProduct)
+    } else {
+      const deleteProduct = {
+        quantity: props.product.quantity,
+        product: props.product.product,
+      }
+      dispatch(removeProduct(deleteProduct))
+    }
   }
   console.log(props)
 
@@ -93,8 +109,34 @@ function CartProduct(props) {
         <WrapperText>
           <Name>{props.product.product.data.name}</Name>
           <Price>Unit price: ${props.product.product.data.price}</Price>
-          <span>Quantity: {props.product.quantity}</span>
-          <Subtotal>Subtotal: {props.product.product.data.price*props.product.quantity}</Subtotal>
+          <Quantity>
+            <button
+              onClick={() => clickQuantity('more')}
+              style={props.product.quantity <= 1 ? { cursor: 'unset' } : {}}
+              disabled={props.product.quantity <= 1}
+            >
+              &laquo;
+            </button>
+            <span>{props.product.quantity}</span>
+            <button
+              onClick={() => clickQuantity('less')}
+              style={
+                props.product.quantity <= props.product.product.data.stock
+                  ? { cursor: 'unset' }
+                  : {}
+              }
+              disabled={
+                props.product.quantity <= props.product.product.data.stock
+              }
+            >
+              &raquo;
+            </button>
+            Quantity: {props.product.quantity}
+          </Quantity>
+          <Subtotal>
+            Subtotal:{' '}
+            {props.product.product.data.price * props.product.quantity}
+          </Subtotal>
         </WrapperText>
         <RemoveProduct>
           <button onClick={removeAProduct}>Remove Product</button>
@@ -102,7 +144,6 @@ function CartProduct(props) {
       </Wrapper>
       {props.children}
     </>
-
   )
 }
 

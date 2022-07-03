@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import cartIcon from '../../assetss/images/cart.png'
-import { useSelector } from "react-redux"
-import { selectCartQuantity } from "../../redux/slices/productsCartSlice"
+import { useSelector } from 'react-redux'
+import { selectCartQuantity } from '../../redux/slices/productsCartSlice'
 import { Link } from 'react-router-dom'
 
 const WrapperCart = styled.span`
@@ -27,7 +27,7 @@ const CartNumber = styled.span`
 `
 
 function AddToCart() {
-  const dataQuantityProductsCart = useSelector(selectCartQuantity);
+  const dataQuantityProductsCart = useSelector(selectCartQuantity)
   const onClickCart = () => {
     console.log('Cart clicked!')
   }

@@ -1,8 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
 
 //Slice
 export const productsCartSlice = createSlice({
-  name: "productsCartList",
+  name: 'productsCartList',
   initialState: {
     productsCart: [],
     cartQuantity: 0,
@@ -21,31 +21,28 @@ export const productsCartSlice = createSlice({
         product: action.payload.product,
       }
       state.cartQuantity += 1
-      state.productsCart.push(newProduct);
+      state.productsCart.push(newProduct)
     },
     removeProduct: (state, action) => {
       state.productsCart = state.productsCart.filter(
         (item) => item.product.id !== action.payload.product.id
-      );
+      )
       state.cartQuantity = state.cartQuantity - action.payload.quantity
     },
     resetProductsCart: (state) => {
-      state.productsCart = [];
-      state.cartQuantity = 0;
+      state.productsCart = []
+      state.cartQuantity = 0
     },
   },
-});
+})
 
 // Actions
-export const {
-  addProduct,
-  removeProduct,
-  resetProductsCart,
-} = productsCartSlice.actions;
+export const { addProduct, removeProduct, resetProductsCart } =
+  productsCartSlice.actions
 
 // Selectors
-export const selectProductsCart = (state) => state.productsCartList.productsCart;
-export const selectCartQuantity = (state) => state.productsCartList.cartQuantity;
+export const selectProductsCart = (state) => state.productsCartList.productsCart
+export const selectCartQuantity = (state) => state.productsCartList.cartQuantity
 
 //Export reducer
-export default productsCartSlice.reducer;
+export default productsCartSlice.reducer
