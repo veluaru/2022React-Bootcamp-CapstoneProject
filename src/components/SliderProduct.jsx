@@ -17,7 +17,7 @@ const Image = styled.img`
   object-fit: cover;
 `
 
-function Slider({ images }) {
+function SliderProduct({ images }) {
   return (
     <WrapperSlider>
       <Carousel
@@ -38,4 +38,4 @@ function Slider({ images }) {
   )
 }
 
-export default Slider
+export default SliderProduct

@@ -6,7 +6,7 @@ import SliderProduct from '../components/SliderProduct'
 import Spinner from '../components/Spinner.jsx'
 import ProductSpecs from '../components/products/ProductSpecs.jsx'
 import ProductText from '../components/products/ProductText.jsx'
-import AddToCart from '../components/products/AddToCart.jsx'
+import AddToCartInput from '../components/products/AddToCartInput.jsx'
 
 const Wrapper = styled.div`
   display: flex;
@@ -60,16 +60,21 @@ const ColumnText = styled.div`
     padding: 0px;
   }
 `
+const NoStock = styled.span`
+  font-size: 14px;
+  font-style: italic;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  margin-top: 15px;
+`
 
 
 
 function ProductDetails() {
   const { id } = useParams()
   const { dataProduct, isLoadingProduct } = useProduct(id)
-  const [numberAddToCart, setNumberAddToCart] = React.useState(1)
-  const onChangeAddCartNumber = (event) => {
-    setNumberAddToCart(event.target.value)
-  }
 
   return (
     <>
@@ -86,9 +91,14 @@ function ProductDetails() {
             <ColumnText>
               <div>
                 <ProductText dataProduct={dataProduct.results[0]} />
-                <AddToCart
-                  numberAddToCart={numberAddToCart}
-                  onChangeAddCartNumber={onChangeAddCartNumber} />
+                {dataProduct.results[0].data.stock > 0 ?
+                  <>
+                    <AddToCartInput product={dataProduct.results[0]} />
+                    <span>Stock: {dataProduct.results[0].data.stock}</span>
+                  </>
+                  : <NoStock>Out of stock</NoStock>
+                }
+
               </div>
             </ColumnText>
           </div>

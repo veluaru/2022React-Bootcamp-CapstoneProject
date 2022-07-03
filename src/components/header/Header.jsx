@@ -1,21 +1,12 @@
 import './Header.scss'
 import React from 'react'
-import styled from 'styled-components'
 import logo from '../../assetss/images/logo1.png'
-import cartIcon from '../../assetss/images/cart.png'
+import AddToCart from './AddToCart.jsx'
 import SearchBar from './SearchBar.jsx'
 import { Link } from 'react-router-dom'
 
-const Icon = styled.img`
-  width: 40px;
-  height: 40px;
-  margin-left: 25px;
-`
 
 function Header() {
-  const onClickCart = () => {
-    console.log('Cart clicked!')
-  }
 
   return (
     <div className="header">
@@ -25,7 +16,7 @@ function Header() {
       </Link>
       <div className="header__right-side">
         <SearchBar />
-        <Icon onClick={onClickCart} src={cartIcon} alt="Cart Icon" />
+        <AddToCart />
       </div>
     </div>
   )

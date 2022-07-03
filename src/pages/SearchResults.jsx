@@ -50,7 +50,7 @@ const productsLoaded = {
   borderRadius: '10px',
 }
 
-function ProductList() {
+function SearchResults() {
   const [page, setPage] = React.useState(1)
   const { search } = useLocation()
   const searchParams = new URLSearchParams(search)
@@ -123,4 +123,4 @@ function ProductList() {
   )
 }
 
-export default ProductList
+export default SearchResults

@@ -6,8 +6,10 @@ import ProductDetails from './pages/ProductDetails.jsx'
 import Header from './components/header/Header.jsx'
 import Footer from './components/Footer.jsx'
 import SearchResults from './pages/SearchResults.jsx'
-import { Routes, Route } from 'react-router-dom'
+import Cart from './pages/Cart.jsx'
+import Checkout from './pages/Checkout'
 import Spinner from './components/Spinner.jsx'
+import { Routes, Route } from 'react-router-dom'
 import { useFeaturedCategories } from './utils/hooks/useFeaturedCategories'
 import { useDispatch } from "react-redux";
 import { setCategories } from "./redux/slices/categoriesSlice";
@@ -19,7 +21,7 @@ function App() {
   React.useEffect(() => {
     dispatch(setCategories(dataCategories));
   }, [dataCategories, dispatch]);
-  
+
 
   return (
     <>
@@ -39,6 +41,8 @@ function App() {
               <Route path="" element={<SearchResults />} />
             </Route>
             <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
           </Routes>
         </div>
         <Footer />
