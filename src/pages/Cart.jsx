@@ -61,8 +61,6 @@ function Cart() {
   const dataProductsCart = useSelector(selectProductsCart)
   const dataQuantityProductsCart = useSelector(selectCartQuantity)
   const [totalPrice, setTotalPrice] = React.useState(0)
-  console.log(dataProductsCart)
-  console.log(dataQuantityProductsCart)
 
   React.useEffect(() => {
     let total = 0
@@ -87,15 +85,15 @@ function Cart() {
               </CartProduct>
             ))}
           </List>
+          <CartTotal>
+            <span>Total: ${totalPrice}</span>
+            <Link to={`/checkout`}>
+              <button>Proceed to checkout</button>
+            </Link>
+          </CartTotal>
         </>
       )}
       {dataQuantityProductsCart === 0 && <span>No products</span>}
-      <CartTotal>
-        <span>Total: ${totalPrice}</span>
-        <Link to={`/checkout`}>
-          <button>Proceed to checkout</button>
-        </Link>
-      </CartTotal>
     </WrapperCart>
   )
 }

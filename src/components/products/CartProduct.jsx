@@ -1,6 +1,9 @@
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
-import { removeProduct, addProduct } from '../../redux/slices/productsCartSlice'
+import {
+  removeProduct,
+  changeProductQuantity,
+} from '../../redux/slices/productsCartSlice'
 
 const Wrapper = styled.div`
   display: flex;
@@ -72,6 +75,21 @@ const RemoveProduct = styled.div`
     justify-content: left;
   }
 `
+const Quantity = styled.div`
+  font-weight: bold;
+  button {
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid rgb(227, 230, 230);
+    background-color: orange;
+    border-radius: 5px;
+    color: black;
+    margin: 5px 5px;
+    padding: 2px 6px;
+    cursor: pointer;
+  }
+`
+
 function CartProduct(props) {
   const dispatch = useDispatch()
 
@@ -83,22 +101,13 @@ function CartProduct(props) {
     dispatch(removeProduct(deleteProduct))
   }
 
-  const clickQuantity = (type) => {
-    if (type === 'more') {
-      const newProduct = {
-        quantity: 1,
-        product: props.product.product,
-      }
-      addProduct(newProduct)
-    } else {
-      const deleteProduct = {
-        quantity: props.product.quantity,
-        product: props.product.product,
-      }
-      dispatch(removeProduct(deleteProduct))
+  const clickQuantity = (buttonType) => {
+    const newProduct = {
+      type: buttonType,
+      productId: props.product.product.id,
     }
+    dispatch(changeProductQuantity(newProduct))
   }
-  console.log(props)
 
   return (
     <>
@@ -111,27 +120,26 @@ function CartProduct(props) {
           <Price>Unit price: ${props.product.product.data.price}</Price>
           <Quantity>
             <button
-              onClick={() => clickQuantity('more')}
+              onClick={() => clickQuantity('less')}
               style={props.product.quantity <= 1 ? { cursor: 'unset' } : {}}
               disabled={props.product.quantity <= 1}
             >
-              &laquo;
+              -
             </button>
             <span>{props.product.quantity}</span>
             <button
-              onClick={() => clickQuantity('less')}
+              onClick={() => clickQuantity('more')}
               style={
-                props.product.quantity <= props.product.product.data.stock
+                props.product.quantity === props.product.product.data.stock
                   ? { cursor: 'unset' }
                   : {}
               }
               disabled={
-                props.product.quantity <= props.product.product.data.stock
+                props.product.quantity === props.product.product.data.stock
               }
             >
-              &raquo;
+              +
             </button>
-            Quantity: {props.product.quantity}
           </Quantity>
           <Subtotal>
             Subtotal:{' '}

@@ -29,15 +29,26 @@ export const productsCartSlice = createSlice({
       )
       state.cartQuantity = state.cartQuantity - action.payload.quantity
     },
-    resetProductsCart: (state) => {
-      state.productsCart = []
-      state.cartQuantity = 0
+    changeProductQuantity: (state, action) => {
+      for (let i = 0; i < state.productsCart.length; i++) {
+        if (state.productsCart[i].product.id === action.payload.productId) {
+          state.productsCart[i].quantity =
+            action.payload.type === 'more'
+              ? state.productsCart[i].quantity + 1
+              : state.productsCart[i].quantity - 1
+          state.cartQuantity =
+            action.payload.type === 'more'
+              ? state.cartQuantity + 1
+              : state.cartQuantity - 1
+          return
+        }
+      }
     },
   },
 })
 
 // Actions
-export const { addProduct, removeProduct, resetProductsCart } =
+export const { addProduct, removeProduct, changeProductQuantity } =
   productsCartSlice.actions
 
 // Selectors
