@@ -10,11 +10,15 @@ import { Link } from 'react-router-dom'
 
 const WrapperCart = styled.div`
   height: 100%;
-  padding: 2% 5% 0 5%;
+  padding: 2% 10% 0 10%;
   margin-bottom: 30px;
   @media (max-width: 600px) {
     padding: 10px 15px;
   }
+`
+const Title = styled.h2`
+  font-size: 26px;
+  font-family: 'Arista-Bold';
 `
 const Line = styled.div`
   display: inline-block;
@@ -68,7 +72,7 @@ function Cart() {
 
   return (
     <WrapperCart>
-      <h2>Products Cart</h2>
+      <Title>PRODUCTS CART</Title>
       <Line />
       {dataQuantityProductsCart > 0 && (
         <>

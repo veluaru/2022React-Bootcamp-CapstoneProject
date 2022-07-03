@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   }
 `
 const Name = styled.label`
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
 `
@@ -40,7 +40,7 @@ const WrapperImage = styled.div`
   justify-content: center;
   img {
     width: auto;
-    height: 200px;
+    height: 150px;
     object-fit: cover;
     border-radius: 10px;
   }
@@ -142,7 +142,7 @@ function CartProduct(props) {
             </button>
           </Quantity>
           <Subtotal>
-            Subtotal:{' '}
+            Subtotal: $
             {props.product.product.data.price * props.product.quantity}
           </Subtotal>
         </WrapperText>
