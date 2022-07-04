@@ -1,11 +1,38 @@
+import React from 'react'
 import styled from 'styled-components'
+import { useSelector } from 'react-redux'
+import { selectProductsCart } from '../../redux/slices/productsCartSlice'
 
 const Wrapper = styled.div`
   display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  border: 1px solid grey;
+  width: 70%;
+  margin-left: 20px;
+  margin-top: 20px;
+  padding: 15px;
+  @media (max-width: 600px) {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+`
+const Title = styled.span`
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  border-bottom: 1px solid grey;
+`
+
+const ProductRow = styled.div`
+  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 100%;
-  margin-bottom: 20px;
+  border-bottom: 1px solid grey;
+  margin-bottom: 10px;
+  :last-child {
+    border-bottom: none;
+  }
   @media (max-width: 600px) {
     width: unset;
     display: flex;
@@ -15,59 +42,87 @@ const Wrapper = styled.div`
   }
 `
 const Name = styled.label`
-  font-size: 24px;
+  font-size: 16px;
   font-weight: bold;
   margin-bottom: 10px;
 `
-const Price = styled.label`
-  font-size: 16px;
+const Quantity = styled.label`
+  font-size: 14px;
   font-weight: bold;
 `
 const Subtotal = styled.label`
-  font-size: 20px;
+  font-size: 15px;
   color: orange;
   font-weight: bold;
   margin-top: 10px;
 `
 const WrapperImage = styled.div`
-  width: 20%;
   display: flex;
   justify-content: center;
   img {
     width: auto;
-    height: 150px;
+    height: 100px;
     object-fit: cover;
     border-radius: 10px;
+    margin-right: 15px;
+    @media (max-width: 600px) {
+      margin-right: 0;
+    }
   }
   @media (max-width: 600px) {
-    width: 100%;
     justify-content: flex-start;
   }
 `
 const WrapperText = styled.div`
-  width: 40%;
   display: flex;
   flex-direction: column;
-  @media (max-width: 600px) {
-    width: 100%;
+`
+const CartTotal = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  margin: 10px 0;
+  span {
+    font-weight: bold;
+    font-size: 24px;
   }
 `
 
 function SummaryTable() {
+  const dataProductsCart = useSelector(selectProductsCart)
+  const [totalPrice, setTotalPrice] = React.useState(0)
+
+  React.useEffect(() => {
+    let total = 0
+    for (let i = 0; i < dataProductsCart.length; i++) {
+      let itemPrice =
+        dataProductsCart[i].product.data.price * dataProductsCart[i].quantity
+      total = total + itemPrice
+    }
+    setTotalPrice(total)
+  }, [dataProductsCart, setTotalPrice])
 
   return (
     <Wrapper>
-      <WrapperImage>
-        <img src={props.product.product.data.mainimage.url} alt="Product" />
-      </WrapperImage>
-      <WrapperText>
-        <Name>{props.product.product.data.name}</Name>
-        <Price>Quantity: {props.product.quantity}</Price>
-        <Subtotal>
-          Subtotal: $
-          {props.product.product.data.price * props.product.quantity}
-        </Subtotal>
-      </WrapperText>
+      <Title>Products</Title>
+      {dataProductsCart.map((product) => (
+        <ProductRow key={product.product.id}>
+          <WrapperImage>
+            <img src={product.product.data.mainimage.url} alt="Product" />
+          </WrapperImage>
+          <WrapperText>
+            <Name>{product.product.data.name}</Name>
+            <Quantity>Quantity: {product.quantity}</Quantity>
+            <Subtotal>
+              Subtotal: $
+              {product.product.data.price * product.quantity}
+            </Subtotal>
+          </WrapperText>
+        </ProductRow>
+      ))}
+      <CartTotal>
+        <span>Total: ${totalPrice}</span>
+      </CartTotal>
     </Wrapper>
   )
 }

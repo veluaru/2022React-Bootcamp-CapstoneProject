@@ -37,7 +37,7 @@ function AddToCartInput({ product }) {
     if (numberAddToCart > 0 && numberAddToCart <= product.data.stock) {
       for (let i = 0; i < numberAddToCart; i++) {
         const newProduct = {
-          quantity: numberAddToCart,
+          quantity: 1,
           product: product,
         }
         dispatch(addProduct(newProduct))
