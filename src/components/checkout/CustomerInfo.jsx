@@ -69,7 +69,6 @@ function SummaryTable() {
       console.log("Proceed to pay")
       return
     }
-    console.log("Holi")
   }
 
   const validateFields = () => {
