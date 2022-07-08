@@ -93,8 +93,10 @@ function SummaryTable() {
   const [totalPrice, setTotalPrice] = React.useState(0)
 
   React.useEffect(() => {
-    const total = 
-      dataProductsCart.reduce((total, n) => total + (n.product.data.price * n.quantity), 0)
+    const total = dataProductsCart.reduce(
+      (total, n) => total + n.product.data.price * n.quantity,
+      0
+    )
     setTotalPrice(total)
   }, [dataProductsCart, setTotalPrice])
 
@@ -110,8 +112,7 @@ function SummaryTable() {
             <Name>{product.product.data.name}</Name>
             <Quantity>Quantity: {product.quantity}</Quantity>
             <Subtotal>
-              Subtotal: $
-              {product.product.data.price * product.quantity}
+              Subtotal: ${product.product.data.price * product.quantity}
             </Subtotal>
           </WrapperText>
         </ProductRow>

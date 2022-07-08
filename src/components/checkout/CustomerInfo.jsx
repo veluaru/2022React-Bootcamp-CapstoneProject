@@ -39,34 +39,30 @@ const ErrorSpan = styled.span`
 `
 
 function SummaryTable() {
-  const [custumerInfo, setCustumerInfo] = React.useState(
-    {
-      name: "",
-      email: "",
-      zipCode: 0,
-      orderNote: "",
-    }
-  )
-  const [custumerInfoErrors, setCustumerInfoErrors] = React.useState(
-    {
-      name: false,
-      email: false,
-      zipCode: false,
-      orderNote: false,
-    }
-  )
+  const [custumerInfo, setCustumerInfo] = React.useState({
+    name: '',
+    email: '',
+    zipCode: 0,
+    orderNote: '',
+  })
+  const [custumerInfoErrors, setCustumerInfoErrors] = React.useState({
+    name: false,
+    email: false,
+    zipCode: false,
+    orderNote: false,
+  })
 
   const onChangeValue = (event) => {
-    setCustumerInfo(custumerInfo => ({
+    setCustumerInfo((custumerInfo) => ({
       ...custumerInfo,
       [event.target.name]: event.target.value,
     }))
   }
 
   const onSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (validateFields()) {
-      console.log("Proceed to pay")
+      console.log('Proceed to pay')
       return
     }
   }
@@ -78,7 +74,7 @@ function SummaryTable() {
       zipCode: custumerInfo.zipCode ? false : true,
       orderNote: custumerInfo.orderNote ? false : true,
     }
-    setCustumerInfoErrors(custumerInfoErrors => ({ ...newErrors }))
+    setCustumerInfoErrors((custumerInfoErrors) => ({ ...newErrors }))
     let isValidData = true
     const items = ['name', 'email', 'zipCode', 'orderNote']
     for (let i = 0; i < Object.keys(custumerInfo).length; i++) {
@@ -106,9 +102,10 @@ function SummaryTable() {
         {custumerInfoErrors.orderNote && <ErrorSpan>Field Required</ErrorSpan>}
         <div>
           <MainButton type="submit">Place order</MainButton>
-          <Link to={`/cart`} style={{width: '200px'}}>
-            <MainButton 
-            style={{ backgroundColor: 'orange', borderColor: 'orange' }}>
+          <Link to={`/cart`} style={{ width: '200px' }}>
+            <MainButton
+              style={{ backgroundColor: 'orange', borderColor: 'orange' }}
+            >
               Go back to cart
             </MainButton>
           </Link>

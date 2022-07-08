@@ -61,8 +61,10 @@ function Cart() {
   const [totalPrice, setTotalPrice] = React.useState(0)
 
   React.useEffect(() => {
-    const total = 
-      dataProductsCart.reduce((total, n) => total + (n.product.data.price * n.quantity), 0)
+    const total = dataProductsCart.reduce(
+      (total, n) => total + n.product.data.price * n.quantity,
+      0
+    )
     setTotalPrice(total)
   }, [dataProductsCart, setTotalPrice])
 
