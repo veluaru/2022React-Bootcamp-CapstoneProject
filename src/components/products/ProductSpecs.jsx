@@ -36,12 +36,12 @@ function ProductSpecs({ dataProduct }) {
   return (
     <ColumnSpecs>
       <h1>Specifications</h1>
-      {dataProduct.map((spec, index) =>
+      {dataProduct.map((spec, index) => (
         <SpecInfo key={index}>
           <span>{spec.spec_name}:</span>
           <p>{spec.spec_value}</p>
         </SpecInfo>
-      )}
+      ))}
     </ColumnSpecs>
   )
 }

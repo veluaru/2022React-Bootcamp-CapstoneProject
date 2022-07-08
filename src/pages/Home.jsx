@@ -7,8 +7,8 @@ import { useFeaturedBanners } from '../utils/hooks/useFeaturedBanners'
 import { useFeaturedProducts } from '../utils/hooks/useFeaturedProducts'
 import { Link } from 'react-router-dom'
 import { MainButton } from '../components/MainButton'
-import { useSelector } from "react-redux";
-import { selectCategories } from "../redux/slices/categoriesSlice";
+import { useSelector } from 'react-redux'
+import { selectCategories } from '../redux/slices/categoriesSlice'
 
 const Wrapper = styled.div`
   display: flex;
@@ -22,8 +22,8 @@ const Wrapper = styled.div`
 function Home() {
   const { data, isLoading } = useFeaturedBanners()
   const { dataFeaturedProducts, isLoadingFeaturedProducts } =
-    useFeaturedProducts();
-  const dataCategories = useSelector(selectCategories);
+    useFeaturedProducts()
+  const dataCategories = useSelector(selectCategories)
 
   return (
     <Wrapper>

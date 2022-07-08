@@ -5,8 +5,8 @@ import Spinner from '../components/Spinner.jsx'
 import { useLocation } from 'react-router-dom'
 import { useProducts } from '../utils/hooks/useProducts'
 import { MainButton } from '../components/MainButton'
-import { useSelector } from "react-redux"
-import { selectCategories } from "../redux/slices/categoriesSlice"
+import { useSelector } from 'react-redux'
+import { selectCategories } from '../redux/slices/categoriesSlice'
 import { routeSpacesAndAmpersantEncode } from '../utils/stringUtils'
 
 const Wrapper = styled.div`
@@ -96,8 +96,7 @@ function ProductList() {
   const { search } = useLocation()
   const searchParams = new URLSearchParams(search)
   const category = searchParams.get('category')
-  const dataCategories = useSelector(selectCategories);
-
+  const dataCategories = useSelector(selectCategories)
 
   const onFilterClick = (category) => {
     if (filterSelected.includes(category)) {
@@ -115,11 +114,11 @@ function ProductList() {
   const clickPages = (type) => {
     if (type) {
       if (dataProducts.results.length === 12) {
-        setPage(page + 1);
+        setPage(page + 1)
       }
     } else {
       if (page > 1) {
-        setPage(page - 1);
+        setPage(page - 1)
       }
     }
   }
@@ -131,12 +130,12 @@ function ProductList() {
   }, [category])
 
   React.useEffect(() => {
-    if(dataProducts.results && dataProducts.results === 0){
-      setEmptyProducts(true);
+    if (dataProducts.results && dataProducts.results === 0) {
+      setEmptyProducts(true)
       return
     }
     setFilteredProducts(dataProducts.results || [])
-    setEmptyProducts(false);
+    setEmptyProducts(false)
   }, [dataProducts])
 
   React.useEffect(() => {
@@ -200,19 +199,29 @@ function ProductList() {
         </AllProducts>
       </WrapperProductList>
       <Pagination>
-        {!isLoadingProducts && dataProducts.results &&
+        {!isLoadingProducts && dataProducts.results && (
           <div>
             <button
               onClick={() => clickPages(false)}
               style={page <= 1 ? { cursor: 'unset' } : {}}
-              disabled={page <= 1} >&laquo;</button>
+              disabled={page <= 1}
+            >
+              &laquo;
+            </button>
             <span>{page}</span>
             <button
               onClick={() => clickPages(true)}
-              style={filteredProducts.length < 12 || emptyProducts ? { cursor: 'unset' } : {}}
-              disabled={filteredProducts.length < 12 || emptyProducts}>&raquo;</button>
+              style={
+                filteredProducts.length < 12 || emptyProducts
+                  ? { cursor: 'unset' }
+                  : {}
+              }
+              disabled={filteredProducts.length < 12 || emptyProducts}
+            >
+              &raquo;
+            </button>
           </div>
-        }
+        )}
       </Pagination>
     </Wrapper>
   )

@@ -3,13 +3,14 @@ import { API_BASE_URL } from '../constants'
 import { useLatestAPI } from './useLatestAPI'
 
 export function useSearchTerm(term, page) {
-  const [isLoadingSearchTerm, setIsLoadingSearchTerm] = useState(true);
-  const [dataSearchTerm, setSearchTerm] = useState({});
-  const { ref: apiRef, isLoadingSearchTerm: isApiMetadataLoading } = useLatestAPI();
+  const [isLoadingSearchTerm, setIsLoadingSearchTerm] = useState(true)
+  const [dataSearchTerm, setSearchTerm] = useState({})
+  const { ref: apiRef, isLoadingSearchTerm: isApiMetadataLoading } =
+    useLatestAPI()
 
   useEffect(() => {
     if (!apiRef || isApiMetadataLoading) {
-      return () => { }
+      return () => {}
     }
 
     const controller = new AbortController()
@@ -25,8 +26,9 @@ export function useSearchTerm(term, page) {
           )}&lang=en-us&pageSize=5&page=${page}`,
           {
             signal: controller.signal,
-          })
-        const responseJson = await response.json();
+          }
+        )
+        const responseJson = await response.json()
         setSearchTerm(responseJson)
         setIsLoadingSearchTerm(false)
       } catch (error) {
@@ -38,12 +40,12 @@ export function useSearchTerm(term, page) {
     getSearchTerm()
 
     return () => {
-      controller.abort();
+      controller.abort()
     }
-  }, [apiRef, isApiMetadataLoading, term, page]);
+  }, [apiRef, isApiMetadataLoading, term, page])
 
   return {
     dataSearchTerm,
     isLoadingSearchTerm,
-  };
+  }
 }

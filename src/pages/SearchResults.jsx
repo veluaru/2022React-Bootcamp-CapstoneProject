@@ -50,33 +50,36 @@ const productsLoaded = {
   borderRadius: '10px',
 }
 
-function ProductList() {
+function SearchResults() {
   const [page, setPage] = React.useState(1)
   const { search } = useLocation()
   const searchParams = new URLSearchParams(search)
   const searchTerm = searchParams.get('q')
-  const { dataSearchTerm, isLoadingSearchTerm } = useSearchTerm(searchTerm, page)
+  const { dataSearchTerm, isLoadingSearchTerm } = useSearchTerm(
+    searchTerm,
+    page
+  )
   const [filteredSearchTerm, setFilteredSearchTerm] = React.useState([])
   const [emptyProducts, setEmptyProducts] = React.useState(false)
 
   const clickPages = (type) => {
     if (type) {
       if (dataSearchTerm.results.length === 5) {
-        setPage(page + 1);
+        setPage(page + 1)
       }
     } else {
       if (page > 1) {
-        setPage(page - 1);
+        setPage(page - 1)
       }
     }
   }
   React.useEffect(() => {
     if (dataSearchTerm.results && dataSearchTerm.results === 0) {
-      setEmptyProducts(true);
+      setEmptyProducts(true)
       return
     }
     setFilteredSearchTerm(dataSearchTerm.results || [])
-    setEmptyProducts(false);
+    setEmptyProducts(false)
   }, [dataSearchTerm])
 
   return (
@@ -93,34 +96,44 @@ function ProductList() {
         >
           {isLoadingSearchTerm && <Spinner />}
           {!isLoadingSearchTerm &&
-          dataSearchTerm.results &&
-          dataSearchTerm.results.length > 0 && (
-            <Products products={filteredSearchTerm} />
-          )}
-          {!isLoadingSearchTerm && 
-          dataSearchTerm.results && 
-          dataSearchTerm.results.length === 0 && (
-            <Empty>There are no matching products :c</Empty>
-          )}
+            dataSearchTerm.results &&
+            dataSearchTerm.results.length > 0 && (
+              <Products products={filteredSearchTerm} />
+            )}
+          {!isLoadingSearchTerm &&
+            dataSearchTerm.results &&
+            dataSearchTerm.results.length === 0 && (
+              <Empty>There are no matching products :c</Empty>
+            )}
         </AllProducts>
       </WrapperProductList>
       <Pagination>
-        {!isLoadingSearchTerm && dataSearchTerm.results &&
+        {!isLoadingSearchTerm && dataSearchTerm.results && (
           <div>
             <button
               onClick={() => clickPages(false)}
               style={page <= 1 ? { cursor: 'unset' } : {}}
-              disabled={page <= 1} >&laquo;</button>
+              disabled={page <= 1}
+            >
+              &laquo;
+            </button>
             <span>{page}</span>
             <button
               onClick={() => clickPages(true)}
-              style={filteredSearchTerm.length < 5 || emptyProducts ? { cursor: 'unset' } : {}}
-              disabled={filteredSearchTerm.length < 5 || emptyProducts}>&raquo;</button>
+              style={
+                filteredSearchTerm.length < 5 || emptyProducts
+                  ? { cursor: 'unset' }
+                  : {}
+              }
+              disabled={filteredSearchTerm.length < 5 || emptyProducts}
+            >
+              &raquo;
+            </button>
           </div>
-        }
+        )}
       </Pagination>
     </Wrapper>
   )
 }
 
-export default ProductList
+export default SearchResults

@@ -10,7 +10,6 @@ const CardList = styled.div`
 `
 
 function Products({ products: results }) {
-  
   return (
     <CardList>
       {results.map((product) => (
